@@ -8,13 +8,18 @@ import axios from "axios";
 // import axiosInstance from "../Store/Axios";
 import { useSelector, useDispatch } from "react-redux";
 import { clearUserData } from "../Store/Redux/Action/UserAction";
+import { useLocation } from "react-router-dom";
 
 const navigation = [
-  { name: "Home", href: "#", current: false },
-  { name: "Posts", href: "#", current: false },
-  { name: "Gallery", href: "#", current: false },
-  { name: "Events", href: "#", current: false },
-  { name: "Subscription", href: "#", current: false },
+  { name: "Home", to: "/", current: false },
+  { name: "Posts", to: "/posts", current: false },
+  { name: "Gallery", to: "/gallery", current: false },
+  { name: "Events", to: "/events", current: false },
+];
+
+const easy = [
+  { name: "Subscription", to: "/subscription", current: false },
+  { name: "Notification", to: "#", current: false },
 ];
 
 function classNames(...classes) {
@@ -29,6 +34,7 @@ export default function NavbarAdmin() {
   );
 
   const dispatch = useDispatch();
+  const currentLocation = useLocation();
 
   const handleLogout = async () => {
     try {
@@ -42,10 +48,9 @@ export default function NavbarAdmin() {
         { headers: { "Content-Type": "application/json" } }
       );
 
+      console.log("response eeeeeeeeeeee", response.status);
 
-      console.log("response eeeeeeeeeeee",response.status)
-
-      if ( response.status === 200) {
+      if (response.status === 200) {
         dispatch(clearUserData());
         // axios.defaults.headers.common["Authorization"] = null;
         navigate("/login");
@@ -94,25 +99,69 @@ export default function NavbarAdmin() {
                   </Link>
                 </div>
                 {/* <div className="hidden sm:ml-6 sm:block"> */}
-                <div className="flex items-center justify-center hidden lg:flex lg:gap-x-12 flex-1 ">
+                <div className="flex items-center justify-center hidden lg:flex lg:gap-x-12 flex-1">
                   {navigation.map((item) => (
-                    <Disclosure.Button
+                    <Link
                       key={item.name}
-                      as="a"
-                      href={item.href}
-                      className={classNames(
-                        item.current
-                          ? "bg-gray-900 text-white"
-                          : "text-gray-800 text-lg font-bold",
-                        "block rounded-md px-1 py-2 text-base relative group"
-                      )}
-                      aria-current={item.current ? "page" : undefined}
+                      to={item.to}
+                      className={`block rounded-md px-1 py-2 text-base relative group ${
+                        currentLocation.pathname === item.to
+                          ? " text-blue-600 text-lg font-bold"
+                          : "text-gray-800 text-lg font-bold"
+                      }`}
+                      aria-current={
+                        currentLocation.pathname === item.to
+                          ? "page"
+                          : undefined
+                      }
                     >
                       {item.name}
                       <span className="absolute bottom-0.5 left-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
                       <span className="absolute bottom-0.5 right-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
-                    </Disclosure.Button>
+                    </Link>
                   ))}
+                  {easy.map((item) =>
+                    // Check the user's role and conditionally render links
+                    item.name === "Notification" && role === "premium" ? (
+                      <Link
+                        key={item.name}
+                        to={item.to}
+                        className={`block rounded-md px-1 py-2 text-base relative group ${
+                          currentLocation.pathname === item.to
+                            ? " text-blue-600 text-lg font-bold"
+                            : "text-gray-800 text-lg font-bold"
+                        }`}
+                        aria-current={
+                          currentLocation.pathname === item.to
+                            ? "page"
+                            : undefined
+                        }
+                      >
+                        {item.name}
+                        <span className="absolute bottom-0.5 left-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
+                        <span className="absolute bottom-0.5 right-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
+                      </Link>
+                    ) : item.name === "Subscription" && role === "user" ? (
+                      <Link
+                        key={item.name}
+                        to={item.to}
+                        className={`block rounded-md px-1 py-2 text-base relative group ${
+                          currentLocation.pathname === item.to
+                            ? " text-blue-600 text-lg font-bold"
+                            : "text-gray-800 text-lg font-bold"
+                        }`}
+                        aria-current={
+                          currentLocation.pathname === item.to
+                            ? "page"
+                            : undefined
+                        }
+                      >
+                        {item.name}
+                        <span className="absolute bottom-0.5 left-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
+                        <span className="absolute bottom-0.5 right-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
+                      </Link>
+                    ) : null
+                  )}
                 </div>
               </div>
               {/* </div> */}

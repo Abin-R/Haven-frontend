@@ -1,6 +1,6 @@
 import Navbar from "../components/Navbar";
 import ImageCarousel from "../components/Homeimagecarousel";
-import PacmanLoader from "react-spinners/PacmanLoader";
+import ScaleLoader from "react-spinners/ScaleLoader";
 import { useState, useEffect } from "react";
 
 function Home() {
@@ -24,12 +24,11 @@ function Home() {
             height: "100vh",
           }}
         >
-          <PacmanLoader
-
+          <ScaleLoader
             color={"black"}
             loading={loading}
             // cssOverride={override}
-            size={50}
+            size={70}
             aria-label="Loading Spinner"
             data-testid="loader"
           />

@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useState, useEffect } from 'react';
 import { Typography } from '@material-tailwind/react';
+import { Link } from 'react-router-dom';
 
 const images = [
   'https://executiveevents.in/Userfiles/Poster/45551b5fa56b451485d3a7cbd2b13cf8.jpg',
@@ -36,9 +37,11 @@ function ImageCarousel() {
           <Typography variant="h5">
             Embrace Haven's Community - Where You Belong, Thrive, and Evolve Together
           </Typography>
-          <button className="bg-red-500 text-white font-bold py-2 px-7 rounded-xl mt-6">
-            Subscribe
-          </button>
+          <Link to="/subscription">
+              <button className="bg-red-500 text-white font-bold py-2 px-7 rounded-xl mt-6">
+                   Subscribe
+             </button>
+         </Link>
         </div>
       </figcaption>
       <div className="absolute bottom-5 left-0 w-full flex justify-center py-4">

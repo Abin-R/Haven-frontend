@@ -5,16 +5,17 @@ import { Link } from "react-router-dom";
 // import { useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
-import axiosInstance from "../../Store/Axios";
+// import axiosInstance from "../Store/Axios";
 import { useSelector, useDispatch } from "react-redux";
 import { clearUserData } from "../../Store/Redux/Action/UserAction";
+import {  useLocation } from 'react-router-dom';
 
 const navigation = [
-  { name: "Home", href: "#", current: false },
-  { name: "Posts", href: "#", current: false },
-  { name: "Gallery", href: "#", current: false },
-  { name: "Events", href: "#", current: false },
-  { name: "Subscription", href: "#", current: false },
+  { name: "Dashboard", to: "/dashboard", current: false },
+  { name: "Users", to: "/user-list", current: false },
+  { name: "Events", to: "/gallery", current: false },
+  { name: "Posts", to: "/events", current: false },
+  { name: "Finance", to: "/subscription-list", current: false },
 ];
 
 function classNames(...classes) {
@@ -24,31 +25,31 @@ function classNames(...classes) {
 export default function NavbarAdmin() {
   const navigate = useNavigate();
 
-  const { isAuthenticated, username ,role} = useSelector((state) => state.user);
+  const { isAuthenticated, username, role } = useSelector(
+    (state) => state.user
+  );
 
   const dispatch = useDispatch();
+  const currentLocation = useLocation();
+
 
   const handleLogout = async () => {
     try {
-      const refreshToken = localStorage.getItem("refreshToken");
+      const refreshToken = localStorage.getItem("refresh_token");
 
       console.log("Token being sent in the request:", refreshToken);
 
-      const response = await axiosInstance.post(
-        // Use the axiosInterceptor for the request
+      const response = await axios.post(
         "http://127.0.0.1:8000/api/logout/",
-        { refresh_token: refreshToken },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
-        }
+        { refresh_token: localStorage.getItem("refresh_token") },
+        { headers: { "Content-Type": "application/json" } }
       );
+
+      console.log("response eeeeeeeeeeee", response.status);
 
       if (response.status === 200) {
         dispatch(clearUserData());
-        axios.defaults.headers.common["Authorization"] = null;
+        // axios.defaults.headers.common["Authorization"] = null;
         navigate("/login");
         console.log("success");
       } else {
@@ -62,11 +63,13 @@ export default function NavbarAdmin() {
   return (
     <Disclosure
       as="nav"
-      className="bg-black  fixed top-0  w-full z-50 backdrop-filter backdrop-blur-lg"
+      className="bg-white  fixed top-0  w-full z-50 backdrop-filter backdrop-blur-lg"
       style={{
         boxShadow:
           "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+          backgroundColor:"#fafafa"
       }}
+
     >
       {({ open }) => (
         <>
@@ -86,7 +89,7 @@ export default function NavbarAdmin() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                <Link to="/">
+                  <Link to="\">
                     <img
                       className="h-8 w-auto"
                       src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Haven_Holiday_Wordmark.svg/1280px-Haven_Holiday_Wordmark.svg.png"
@@ -96,51 +99,26 @@ export default function NavbarAdmin() {
                 </div>
                 {/* <div className="hidden sm:ml-6 sm:block"> */}
                 <div className="flex items-center justify-center hidden lg:flex lg:gap-x-12 flex-1">
-                  <Link
-                    to = "/dashboard"
-                    className="text-lg font-semibold leading-6 text-white"
-                  >
-                  Dashboard
-                  </Link>
-                  <Link
-                    to = "/user-list"
-                    className="text-lg font-semibold leading-6 text-white"
-                  >
-                    Users
-                  </Link>
-                  {/* <a
-                    href="#"
-                    className="text-lg font-semibold leading-6 text-white"
-                  >
-                    Gallery
-                  </a>
-                  <div className="relative">
-                    <button
-                      type="button"
-                      className="flex items-center gap-x-1 text-lg font-semibold leading-6 text-white"
-                      aria-expanded="false"
+                  {navigation.map((item) => (
+                    <Link
+                      key={item.name}
+                      to={item.to}
+                      className={`block rounded-md px-1 py-2 text-base relative group ${
+                        currentLocation.pathname === item.to
+                          ? " text-blue-600 text-lg font-bold"
+                          : "text-gray-800 text-lg font-bold"
+                      }`}
+                      aria-current={
+                        currentLocation.pathname === item.to
+                          ? "page"
+                          : undefined
+                      }
                     >
-                      Events
-                      <svg
-                        className="h-5 w-5 flex-none text-white"
-                        viewBox="0 0 20 2  0"
-                        fill="currentColor"
-                        aria-hidden="true"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                  <a
-                    href="#"
-                    className="text-lg font-semibold leading-6 text-white"
-                  >
-                    Subscription
-                  </a> */}
+                      {item.name}
+                      <span className="absolute bottom-0.5 left-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
+                      <span className="absolute bottom-0.5 right-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
+                    </Link>
+                  ))}
                 </div>
               </div>
               {/* </div> */}
@@ -156,11 +134,11 @@ export default function NavbarAdmin() {
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
                 </button> */}
                   <span
-                    className="hidden sm:block text-white"
+                    className="hidden sm:block"
                     style={{
                       fontFamily: "cursive",
                       fontSize: "24px",
-                    
+                      color: "black",
                       fontWeight: "bold",
                     }}
                   >
@@ -203,11 +181,11 @@ export default function NavbarAdmin() {
                             </a>
                           )}
                         </Menu.Item>
-                        {role === 'admin' ? ( // Show 'Dashboard' for admin, 'Settings' for regular user
+                        {role === "admin" ? ( // Show 'Dashboard' for admin, 'Settings' for regular user
                           <Menu.Item>
                             {({ active }) => (
                               <Link
-                              to="/dashboard"
+                                to="/dashboard"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
@@ -253,7 +231,7 @@ export default function NavbarAdmin() {
               ) : (
                 <Link
                   to="/login"
-                  className="text-lg font-semibold leading-6 text-gray-900"
+                  className="text-lg font-bold leading-6 text-gray-900"
                 >
                   Log in <span aria-hidden="true">&rarr;</span>
                 </Link>
