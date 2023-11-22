@@ -6,67 +6,81 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { Modal, Box, Typography} from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../Store/Axios";
 // import Button from "@mui/material/Button";
 
 
-const PaypalButton = ({ subscriptionType, price }) => {
+// eslint-disable-next-line react/prop-types
+const Booking = ({ event, prices }) => {
+    console.log("-------------",prices)
   const { username } = useSelector((state) => state.user);
   const [, setPaidFor] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const dispatch = useDispatch();
+//   const dispatch = useDispatch();
   const history  = useNavigate()
 
   const createOrder = (data, actions) => {
     return actions.order.create({
       purchase_units: [
         {
-          description: subscriptionType,
+          name: event,
           amount: {
-            value: price,
-            currency_code: "USD", // Replace 'USD' with your required currency code
+            value: prices, // Convert to string
+            currency_code: "USD",
           },
         },
       ],
     });
   };
+  
 
   const onApprove = (data, actions) => {
     return actions.order.capture().then(function (details) {
-      return axios.post(
-        "http://127.0.0.1:8000/subscription/save-subscription/",
-        {
-          username: username, // Replace with the actual username
-          subscriptionType: subscriptionType,
-          amount: price,
-          transactionId: details.id,
-        }
-      );
+        const token = localStorage.getItem('access_token');
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+      // Change this part of your frontend code
+return axiosInstance.post(
+    "http://127.0.0.1:8000/event/bookings/",
+    {
+      username: username,
+      event: event,     // Change to match the key used in the backend
+      prices: prices,   // Change to match the key used in the backend
+      transactionId: details.id,
+    },
+    config
+  );
+  
+      
     });
   };
 
   const handleApprove = (data, actions) => {
     onApprove(data, actions)
       .then((response) => {
-        if (response.status === 200) {
+        if (response.status === 201) {
           setPaidFor(true);
           console.log('Subscription data:', response.data);
 
         // Assuming user_role is a direct property of the response
-        const userRole = response.data.user_role; 
+        // const userRole = response.data.user_role; 
 
-        // Dispatch the user role to your Redux store
-        dispatch({
-          type: "SET_USER_DATA",
-          payload: {
-            username: response.data.username,
-            userId: response.data.id,
-            role: userRole , // Check admin status or adjust according to your data
-            isAuthenticated: true,
-            // Add other relevant user data here
-          },
-        });
+        // // Dispatch the user role to your Redux store
+        // dispatch({
+        //   type: "SET_USER_DATA",
+        //   payload: {
+        //     username: response.data.username,
+        //     userId: response.data.id,
+        //     role: userRole , // Check admin status or adjust according to your data
+        //     isAuthenticated: true,
+        //     // Add other relevant user data here
+        //   },
+        // });
         setOpenModal(true); // Open the modal on successful payment
     
         } else {
@@ -170,10 +184,10 @@ const PaypalButton = ({ subscriptionType, price }) => {
   );
 };
 
-PaypalButton.propTypes = {
-  subscriptionType: PropTypes.string.isRequired,
+Booking.propTypes = {
+  event: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   // Add other expected properties and their PropTypes
 };
 
-export default PaypalButton;
+export default Booking;

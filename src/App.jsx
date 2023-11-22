@@ -18,6 +18,17 @@ import Super from './pages/Admin/UsersList/Super';
 import Admin from './pages/Admin/UsersList/Admin';
 import SubscriptionList from './pages/Admin/Finance/SubscriptionList';
 import EventBooking from './pages/Admin/Finance/EventBooking';
+import Profile from './pages/Profile';
+import Event from './pages/SumitEvent/Event';
+import SingleEvent from './pages/SumitEvent/SingleEvent';
+import YourEvents from './pages/SumitEvent/CreateEvents';
+import YourEvent from './pages/SumitEvent/YourEvents';
+import Attendees from './pages/SumitEvent/Attendees';
+import Posts from './pages/Posts/Posts';
+import PostDetail from './pages/Posts/PostDetail';
+import CreatePosts from './pages/Posts/CreatePosts';
+// import BookingPayment from './pages/SumitEvent/BookingPayment';
+
 
 function App() {
 
@@ -29,6 +40,17 @@ function App() {
             <Routes>
                 {/* USERSIDE */}
                 <Route path="/" element={<Home />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/events" element={<Event />} />
+                <Route path="/create-events" element={<YourEvents />} />
+                <Route path="/Your-events" element={<YourEvent />} />
+                <Route path="/posts" element={<Posts />} />
+                <Route path="/create-posts/:eventId" element={<CreatePosts />} />
+                {/* <Route path="/posts-1" element={<PostDetail />} /> */}
+                <Route path="/post/:postId" element={<PostDetail/>} />
+                <Route path="/attendees-event/:eventId" element={<Attendees/>} />
+                <Route path="/event/:eventId" element={<SingleEvent/>} />
+
                 <Route path="/dashboard" element={<ProtectedUrl><Dashboard /></ProtectedUrl>} />
                 <Route
                     path="/subscription"

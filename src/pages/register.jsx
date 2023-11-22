@@ -68,12 +68,12 @@ function Register() {
 
 
   return (
-    <div>
-      <div className="h-screen lg:flex">
+    <>
+      <div className="h-screen lg:flex sm:h-screen">
         <Imagecaurosel />
         <div className="lg:w-1/2 xl:max-w-screen-sm">
           <Link to="/">
-            <div className="text-2xl text-indigo-800 tracking-wide font-semibold flex justify-center mt-12">
+            <div className="text-2xl text-indigo-800 tracking-wide font-semibold flex justify-center mt-8">
               Welcome To
               <img
                 className="h-5 w-auto mt-2 ml-3"
@@ -83,14 +83,14 @@ function Register() {
             </div>
           </Link>
 
-          <div className="mt-5 px-8 sm:px-24 md:px-48 lg:px-12 lg:mt-10 xl:px-24 xl:max-w-2xl">
+          <div className="mt-2 px-8 sm:px-24 md:px-48 lg:px-12 lg:mt-8 xl:px-24 xl:max-w-2xl">
             <h2
               className="text-center text-4xl text-indigo-900 font-display font-semibold lg:text-left xl:text-4xl
                     xl:text-bold"
             >
               Register
             </h2>
-            <div className="mt-5">
+            <div className="mt-7">
               <form onSubmit={handleSubmit}>
                 <div>
                   <div className="text-sm font-bold text-gray-700 ">
@@ -104,7 +104,7 @@ function Register() {
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
-                <div className="mt-5">
+                <div className="mt-3">
                   <div className="text-sm font-bold text-gray-700 ">
                     Email Address
                   </div>
@@ -116,7 +116,7 @@ function Register() {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
-                <div className="mt-5">
+                <div className="mt-3">
                   <div className="text-sm font-bold text-gray-700 ">
                     Password
                   </div>
@@ -129,7 +129,7 @@ function Register() {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
-                <div className="mt-8">
+                <div className="mt-6">
                   <button className="bg-indigo-500 text-gray-100 p-4 w-full rounded-full tracking-wide font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-indigo-600 shadow-lg">
                     Sign up
                   </button>
@@ -142,8 +142,8 @@ function Register() {
               </div>
             </div>
           </div>
-          <button className="w-60 h-14  mr-60 ml-48 mt-8 max-w-xs font-bold shadow-sm rounded-lg py-4 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
-            <div className="bg-white  rounded-full">
+          <div className="flex justify-center mt-6  ">
+            <button className="w-64 h-14    max-w-xs font-bold shadow-sm rounded-lg  bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
               {/* <svg className="w-4" viewBox="0 0 533.5 544.3">
                   <path
                     d="M533.5 278.4c0-18.5-1.5-37.1-4.7-55.3H272.1v104.8h147c-6.1 33.8-25.7 63.7-54.4 82.7v68h87.7c51.5-47.4 81.1-117.4 81.1-200.2z"
@@ -162,7 +162,7 @@ function Register() {
                     fill="#ea4335"
                   />
                 </svg> */}
-            </div>
+           
             <GoogleOAuthProvider className="bg-red" clientId="591332327561-qqkbkghu0ddnmngvju4e1s9jgfi4rj44.apps.googleusercontent.com">
               <div >
 
@@ -228,7 +228,8 @@ function Register() {
               </div>
             </GoogleOAuthProvider>
           </button>
-          <div className="mt-7 text-sm font-display font-semibold text-gray-700 text-center">
+        </div>
+          <div className="mt-5 text-sm font-display font-semibold text-gray-700 text-center">
             Already have an account!{" "}
             <Link
               to="/login"
@@ -291,7 +292,7 @@ function Register() {
       {/* )} */}
 
       <Toaster position="top-center" reverseOrder={false} />
-    </div>
+    </>
   );
 }
 

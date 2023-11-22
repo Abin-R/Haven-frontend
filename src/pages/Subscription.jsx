@@ -62,21 +62,21 @@ function Subscription() {
 //     }
 //   };
   return (
-    <div>
+    < >
       <NavbarAdmin />
 
-      <div className="mt-32 px-16">
+      <div className="mt-28 sm:px-9 px-2">
         <div>
-          <h2 className="text-3xl font-bold tracki text-center mt-12 sm:text-5xl ">
+          <h2 className="text-3xl font-bold tracki text-center mt-10 sm:text-5xl ">
             Subscription
           </h2>
           <p className="max-w-3xl mx-auto mt-4 text-xl text-center ">
             Discover Your Haven: Craft a Membership Tailored for You
           </p>
         </div>
-        <div className="mt-24  container space-y-12 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-x-8">
-          <div className="relative p-7  border border-gray-200 rounded-2xl shadow-sm flex flex-col">
-            <div className="flex-1">
+        <div className="sm:mt-24  container space-y-12 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-x-8">
+          <div className="relative p-7 py-14  border border-gray-200 rounded-2xl shadow-sm flex flex-col">
+            <div className="flex-1 ">
               {subscriptions &&
                 subscriptions.map((subscription) => (
                   <div className="mt-0" key={subscription.id}>
@@ -329,7 +329,7 @@ function Subscription() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-// import { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 // import axiosInstance from "../Store/Axios";
@@ -15,6 +15,7 @@ const navigation = [
   { name: "Posts", to: "/posts", current: false },
   { name: "Gallery", to: "/gallery", current: false },
   { name: "Events", to: "/events", current: false },
+  { name: "Blog", to: "/eventsw", current: false },
 ];
 
 const easy = [
@@ -28,6 +29,8 @@ function classNames(...classes) {
 
 export default function NavbarAdmin() {
   const navigate = useNavigate();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDropdownOpen2, setIsDropdownOpen2] = useState(false);
 
   const { isAuthenticated, username, role } = useSelector(
     (state) => state.user
@@ -90,9 +93,9 @@ export default function NavbarAdmin() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <Link to="\">
+                  <Link to="/">
                     <img
-                      className="h-8 w-auto"
+                      className="h-8 w-auto mx-8"
                       src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Haven_Holiday_Wordmark.svg/1280px-Haven_Holiday_Wordmark.svg.png"
                       alt="Your Company"
                     />
@@ -100,26 +103,145 @@ export default function NavbarAdmin() {
                 </div>
                 {/* <div className="hidden sm:ml-6 sm:block"> */}
                 <div className="flex items-center justify-center hidden lg:flex lg:gap-x-12 flex-1">
-                  {navigation.map((item) => (
-                    <Link
-                      key={item.name}
-                      to={item.to}
-                      className={`block rounded-md px-1 py-2 text-base relative group ${
-                        currentLocation.pathname === item.to
-                          ? " text-blue-600 text-lg font-bold"
-                          : "text-gray-800 text-lg font-bold"
-                      }`}
-                      aria-current={
-                        currentLocation.pathname === item.to
-                          ? "page"
-                          : undefined
-                      }
-                    >
-                      {item.name}
-                      <span className="absolute bottom-0.5 left-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
-                      <span className="absolute bottom-0.5 right-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
-                    </Link>
-                  ))}
+                  {navigation.map((item) =>
+                    item.name === "Events" &&
+                    (role === "super" || role === "premium") ? (
+                      <div
+                        key={item.name}
+                        className="relative group"
+                        onMouseEnter={() => setIsDropdownOpen(true)}
+                        onMouseLeave={() => setIsDropdownOpen(false)}
+                      >
+                        <Link
+                          id="dropdownDelayButton"
+                          data-dropdown-toggle="dropdownDelay"
+                          data-dropdown-delay="500"
+                          data-dropdown-trigger="hover"
+                          key={item.name}
+                          // to={item.to}
+                          className={`block rounded-md px-1 py-2 text-base relative group  ${
+                            currentLocation.pathname === item.to
+                              ? " text-blue-600 text-lg font-bold"
+                              : "text-gray-800 text-lg font-bold"
+                          }`}
+                          
+                        >
+                          {item.name}
+                          {isDropdownOpen && (
+                            <div
+                              id="dropdownDelay"
+                              className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute top-full left-0"
+                            >
+                              <ul
+                                className="py-2 text-sm text-black dark:text-gray-200"
+                                aria-labelledby="dropdownDelayButton"
+                              >
+                                <li>
+                                  <Link
+                                    to="/your-events"
+                                    class="block px-4 py-2 text-black  hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                  >
+                                   Your Events
+                                  </Link>
+                                </li>
+                                <li>
+                                  <Link
+                                    to="/events"
+                                    class="block px-4 py-2 text-black hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                  >
+                                    Upcoming Events
+                                  </Link>
+                                </li>
+                                
+                                
+                                
+                              </ul>
+                            </div>
+                          )}
+                          <span className="absolute bottom-0.5 left-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
+                          <span className="absolute bottom-0.5 right-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
+                        </Link>
+                      </div>
+                    ) :item.name === "Posts" &&
+                    (role === "super" || role === "premium") ?(
+                      <div
+                        key={item.name}
+                        className="relative group"
+                        onMouseEnter={() => setIsDropdownOpen2(true)}
+                        onMouseLeave={() => setIsDropdownOpen2(false)}
+                      >
+                        <Link
+                          id="dropdownDelayButton"
+                          data-dropdown-toggle="dropdownDelay"
+                          data-dropdown-delay="500"
+                          data-dropdown-trigger="hover"
+                          key={item.name}
+                          // to={item.to}
+                          className={`block rounded-md px-1 py-2 text-base relative group  ${
+                            currentLocation.pathname === item.to
+                              ? " text-blue-600 text-lg font-bold"
+                              : "text-gray-800 text-lg font-bold"
+                          }`}
+                          
+                        >
+                          {item.name}
+                          {isDropdownOpen2 && (
+                            <div
+                              id="dropdownDelay"
+                              className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute top-full left-0"
+                            >
+                              <ul
+                                className="py-2 text-sm text-black dark:text-gray-200"
+                                aria-labelledby="dropdownDelayButton"
+                              >
+                                <li>
+                                  <Link
+                                    to="/posts"
+                                    class="block px-4 py-2 text-black  hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                  >
+                                   Posts
+                                  </Link>
+                                </li>
+                                <li>
+                                  <Link
+                                    to="/your-posts"
+                                    class="block px-4 py-2 text-black hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                  >
+                                    Your posts
+                                  </Link>
+                                </li>
+                                
+                                
+                                
+                              </ul>
+                            </div>
+                          )}
+                          <span className="absolute bottom-0.5 left-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
+                          <span className="absolute bottom-0.5 right-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
+                        </Link>
+                      </div>
+                    ): (
+                      <Link
+                        key={item.name}
+                        to={item.to}
+                        className={`block rounded-md px-1 py-2 text-base relative group ${
+                          currentLocation.pathname === item.to
+                            ? " text-blue-600 text-lg font-bold"
+                            : "text-gray-800 text-lg font-bold"
+                        }`}
+                        aria-current={
+                          currentLocation.pathname === item.to
+                            ? "page"
+                            : undefined
+                        }
+                      >
+                        {item.name}
+                        <span className="absolute bottom-0.5 left-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
+                        <span className="absolute bottom-0.5 right-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
+                      </Link>
+                    )
+                  )}
+
                   {easy.map((item) =>
                     // Check the user's role and conditionally render links
                     item.name === "Notification" && role === "premium" ? (
@@ -191,14 +313,17 @@ export default function NavbarAdmin() {
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
                     <div>
-                      <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                      <Menu.Button className="relative flex rounded-full  bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="absolute -inset-1.5" />
                         <span className="sr-only">Open user menu</span>
+                        <div className="">
                         <img
-                          className="h-8 w-8 rounded-full"
+                          className="h-8 w-8  rounded-full"
                           src="https://images.pexels.com/photos/4420634/pexels-photo-4420634.jpeg?auto=compress&cs=tinysrgb&w=600"
                           alt=""
                         />
+
+                        </div>
                       </Menu.Button>
                     </div>
                     <Transition
@@ -213,15 +338,15 @@ export default function NavbarAdmin() {
                       <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <Menu.Item>
                           {({ active }) => (
-                            <a
-                              href="#"
+                            <Link
+                              to="/profile"
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
                               Your Profile
-                            </a>
+                            </Link>
                           )}
                         </Menu.Item>
                         {role === "admin" ? ( // Show 'Dashboard' for admin, 'Settings' for regular user
@@ -288,7 +413,7 @@ export default function NavbarAdmin() {
                 <Disclosure.Button
                   key={item.name}
                   as="a"
-                  href={item.href}
+                  to={item.to}
                   className={classNames(
                     item.current
                       ? "bg-gray-900 text-white"
