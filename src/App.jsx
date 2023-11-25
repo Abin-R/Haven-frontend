@@ -9,6 +9,7 @@ import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import ResetPassword from './pages/ForgotPassword/ResetPassword';
 import ProtectedUrl from './Store/ProtectedUrl';
 import Subscription from './pages/Subscription';
+import PrivateChatRoute from './Store/PrivateChatRoute';
 import { useSelector } from 'react-redux';
 // import UserListRoutes from './Routes/UserListRoutes';
 import AllUsers from './pages/Admin/UsersList/AllUsers';
@@ -27,6 +28,9 @@ import Attendees from './pages/SumitEvent/Attendees';
 import Posts from './pages/Posts/Posts';
 import PostDetail from './pages/Posts/PostDetail';
 import CreatePosts from './pages/Posts/CreatePosts';
+import EventList from './pages/Admin/EventList';
+import PostList from './pages/Admin/PostList';
+import ChatComponent from './pages/Chat/chat';
 // import BookingPayment from './pages/SumitEvent/BookingPayment';
 
 
@@ -45,7 +49,8 @@ function App() {
                 <Route path="/create-events" element={<YourEvents />} />
                 <Route path="/Your-events" element={<YourEvent />} />
                 <Route path="/posts" element={<Posts />} />
-                <Route path="/create-posts/:eventId" element={<CreatePosts />} />
+                <Route path="/chat" element={<PrivateChatRoute><ChatComponent /></PrivateChatRoute>} />
+                <Route path="/create-post/:eventId" element={<CreatePosts />} />
                 {/* <Route path="/posts-1" element={<PostDetail />} /> */}
                 <Route path="/post/:postId" element={<PostDetail/>} />
                 <Route path="/attendees-event/:eventId" element={<Attendees/>} />
@@ -68,6 +73,8 @@ function App() {
                 <Route path="/premium-users" element={<ProtectedUrl><Premium /></ProtectedUrl>} />
                 <Route path="/super-users" element={<ProtectedUrl><Super /></ProtectedUrl>} />
                 <Route path="/admin-users" element={<ProtectedUrl><Admin /></ProtectedUrl>} />
+                <Route path="/event-list" element={<EventList/>} />
+                <Route path="/post-list" element={<PostList/>} />
                 <Route path="/subscription-list" element={<ProtectedUrl><SubscriptionList  /></ProtectedUrl>} />
                 <Route path="/event-booking-list" element={<ProtectedUrl><EventBooking  /></ProtectedUrl>} />
             </Routes>

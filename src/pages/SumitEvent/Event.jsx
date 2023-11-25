@@ -137,7 +137,7 @@ function Event() {
           </p>
         )}
         <p className="flex flex-col absolute top-0 bg-black text-white font-semibold py-5 px-2 mx-72">
-          <span className="flex flex-row px-2 text-sm">{`₹${event.cost}`}</span>
+          <span className="flex flex-row px-2 text-sm">{`$${event.cost}`}</span>
         </p>
         <p
           className="flex flex-col absolute top-44 bg-white text-black rounded font-semibold py-3 px-3 mx-6 "

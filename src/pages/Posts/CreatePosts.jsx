@@ -7,8 +7,10 @@ import { IoCalendarOutline } from "react-icons/io5";
 import { parseISO, format } from "date-fns";
 import axiosInstance from "../../Store/Axios";
 import { useNavigate } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 
 function CreatePosts() {
+  const { eventId } = useParams();
   const [formData, setFormData] = useState({
     description: "",
     location: "",
@@ -50,7 +52,7 @@ function CreatePosts() {
 
       console.log(formDataToSend);
       await axiosInstance.post(
-        `http://127.0.0.1:8000/post/create-event/${postId}`,
+        `http://127.0.0.1:8000/post/create-post/${eventId}/`,
         formDataToSend,
         {
           headers: {

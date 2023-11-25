@@ -13,8 +13,8 @@ import {  useLocation } from 'react-router-dom';
 const navigation = [
   { name: "Dashboard", to: "/dashboard", current: false },
   { name: "Users", to: "/user-list", current: false },
-  { name: "Events", to: "/gallery", current: false },
-  { name: "Posts", to: "/events", current: false },
+  { name: "Events", to: "/event-list", current: false },
+  { name: "Posts", to: "/post-list", current: false },
   { name: "Finance", to: "/subscription-list", current: false },
 ];
 

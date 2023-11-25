@@ -58,7 +58,7 @@ function Login() {
         type: "SET_USER_DATA",
         payload: {
           username: response.data.username,
-          userId: response.data.id,
+          userId: response.data.userId,
           role: response.data.role, // Check admin status or adjust according to your data
           isAuthenticated: true,
           // Add other relevant user data here
@@ -82,10 +82,10 @@ function Login() {
 
   return (
     <div>
-      <div className="h-screen lg:flex">
+      <div className="h-screen lg:flex md:w-screen">
         <Imagecaurosel />
-        <div className="lg:w-1/2 xl:max-w-screen-sm">
-          <div className="py-5  lg:bg-white flex justify-center lg:justify-start lg:px-12"></div>
+        <div className="lg:w-1/2 xl:max-w-screen-sm  md:max-w-screen-2xl">
+          <div className="py-5   lg:bg-white flex justify-center lg:justify-start lg:px-12"></div>
           <Link to="/">
             <div className="text-2xl text-indigo-800 tracking-wide font-semibold flex justify-center ">
               Welcome To

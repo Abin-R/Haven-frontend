@@ -20,7 +20,7 @@ const navigation = [
 
 const easy = [
   { name: "Subscription", to: "/subscription", current: false },
-  { name: "Notification", to: "#", current: false },
+  { name: "Notification", to: "/chat", current: false },
 ];
 
 function classNames(...classes) {
@@ -410,7 +410,7 @@ export default function NavbarAdmin() {
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
               {navigation.map((item) => (
-                <Disclosure.Button
+                <Link
                   key={item.name}
                   as="a"
                   to={item.to}
@@ -423,8 +423,50 @@ export default function NavbarAdmin() {
                   aria-current={item.current ? "page" : undefined}
                 >
                   {item.name}
-                </Disclosure.Button>
+                </Link>
               ))}
+              {easy.map((item) =>
+                    // Check the user's role and conditionally render links
+                    item.name === "Notification" && role === "premium" ? (
+                      <Link
+                        key={item.name}
+                        to={item.to}
+                        className={`block rounded-md px-1 py-2 text-base relative group ${
+                          currentLocation.pathname === item.to
+                            ? " text-blue-600 text-lg font-bold"
+                            : "text-gray-800 text-lg font-bold"
+                        }`}
+                        aria-current={
+                          currentLocation.pathname === item.to
+                            ? "page"
+                            : undefined
+                        }
+                      >
+                        {item.name}
+                        <span className="absolute bottom-0.5 left-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
+                        <span className="absolute bottom-0.5 right-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
+                      </Link>
+                    ) : item.name === "Subscription" && role === "user" ? (
+                      <Link
+                        key={item.name}
+                        to={item.to}
+                        className={`block rounded-md px-1 py-2 text-base relative group ${
+                          currentLocation.pathname === item.to
+                            ? " text-blue-600 text-lg font-bold"
+                            : "text-gray-800 text-lg font-bold"
+                        }`}
+                        aria-current={
+                          currentLocation.pathname === item.to
+                            ? "page"
+                            : undefined
+                        }
+                      >
+                        {item.name}
+                        <span className="absolute bottom-0.5 left-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
+                        <span className="absolute bottom-0.5 right-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
+                      </Link>
+                    ) : null
+                  )}
             </div>
           </Disclosure.Panel>
         </>

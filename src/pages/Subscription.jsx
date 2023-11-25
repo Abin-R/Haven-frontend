@@ -65,9 +65,9 @@ function Subscription() {
     < >
       <NavbarAdmin />
 
-      <div className="mt-28 sm:px-9 px-2">
+      <div className="mt-28 sm:px-9 px-3">
         <div>
-          <h2 className="text-3xl font-bold tracki text-center mt-10 sm:text-5xl ">
+          <h2 className="text-3xl font-bold tracki text-center mt-20 sm:text-5xl ">
             Subscription
           </h2>
           <p className="max-w-3xl mx-auto mt-4 text-xl text-center ">
@@ -75,11 +75,11 @@ function Subscription() {
           </p>
         </div>
         <div className="sm:mt-24  container space-y-12 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-x-8">
-          <div className="relative p-7 py-14  border border-gray-200 rounded-2xl shadow-sm flex flex-col">
+          <div className="relative p-7   border border-gray-200 rounded-2xl shadow-sm flex flex-col">
             <div className="flex-1 ">
               {subscriptions &&
                 subscriptions.map((subscription) => (
-                  <div className="mt-0" key={subscription.id}>
+                  <div className="mt-7" key={subscription.id}>
                     {subscription.subscription_type === "super" ? (
                       <h3 className="text-xl font-semibold">
                         {subscription.subscription_type}
@@ -160,6 +160,7 @@ function Subscription() {
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
                   <span className="ml-3 ">Explore </span>
+                  <span className=""></span>
                 </li>
               </ul>
             </div>

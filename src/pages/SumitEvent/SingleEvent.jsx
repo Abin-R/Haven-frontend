@@ -68,12 +68,13 @@ function SingleEvent() {
       <div>
         <div>
           <img
-            className="w-screen mt-20 sm:h-32"
+            className="w-full h-64 sm:h-32 xl:h-96 mt-20"
             src={`http://127.0.0.1:8000${event.image}`}
-            style={{ maxheight: "440px", height: "440px" }}
-          ></img>
+            alt="Event"
+          />
         </div>
-        <p className="absolute top-28 right-8 ">
+
+        {/* <p className="absolute top-28 right-8 ">
           <div className="min-w-10  min-h-48 p-3 mb-4 font-medium">
             <div className="w-32 h-40  flex-none rounded-t lg:rounded-t-none lg:rounded-l text-center shadow-lg ">
               <div className="block rounded-t overflow-hidden  text-center ">
@@ -92,14 +93,14 @@ function SingleEvent() {
               </div>
             </div>
           </div>
-        </p>
+        </p> */}
       </div>
       <div className="flex flex-row justify-between items-center py-1">
         <span className="lg:font-extrabold lg:text-2xl  text-xl mb-2 mt-5 lg:px-7  mx-4 font-extrabold">
           {event.title}
         </span>
         <span className="mr-8 lg:mt-6 lg:text-4xl text-2xl text-orange-500">
-          ₹{event.cost}
+          ${event.cost}
         </span>
       </div>
       <div className="flex lg:flex-row flex-col">
@@ -162,7 +163,6 @@ function SingleEvent() {
         </p>
       </div>
       <div className="flex items-end flex-col justify-end ">
-        
         <div className="flex items-center mb-4 mx-2 p-5">
           <div className="font-semibold text-lg mx-3">Tickets</div>
 

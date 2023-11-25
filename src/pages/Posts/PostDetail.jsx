@@ -10,17 +10,17 @@ function PostDetail() {
   useEffect(() => {
     const fetchPostDetails = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/post/posts/${postId}`);
+        const response = await axios.get(
+          `http://127.0.0.1:8000/post/posts/${postId}`
+        );
         setPost(response.data);
       } catch (error) {
-        console.error('Error fetching post details:', error);
+        console.error("Error fetching post details:", error);
       }
-    };  
+    };
 
     fetchPostDetails();
   }, [postId]);
-
-
 
   if (!post) {
     // If post details are not available yet, you can render a loading state or redirect
@@ -31,20 +31,21 @@ function PostDetail() {
     <div>
       <NavbarAdmin />
 
-      <div className="flex items-center justify-center mt-24 rounded-sm">
+      <div className="flex items-center justify-center xl:mt-24 mt-20 rounded-sm">
         <img
-          className="rounded-3xl"
-        //   src={post.image}
+          className="xl:rounded-3xl sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-2xl xl:max-w-screen-xl"
           src={`http://127.0.0.1:8000${post.image}`}
           alt="Post Image"
           style={{ width: "600px" }}
         />
       </div>
+
       <div className="mt-11 mx-6 font-extrabold text-2xl">
         {post.event.title}
       </div>
       <div className="mt-2 mx-6 font-semibold text-base">
-        {post.event.start_date} | By {post.user.username} | {post.event.category}
+        {post.event.start_date} | By {post.user.username} |{" "}
+        {post.event.category}
       </div>
       <hr className="h-px lg:mx-6 mx-3 mr-4 my-4 bg-gray-500 border-2 dark:bg-gray-500"></hr>
       <div>
@@ -52,11 +53,11 @@ function PostDetail() {
           {post.description}
         </p>
       </div>
-      <div className="flex justify-center mt-8">
-        <div className="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md w-64 rounded-xl bg-clip-border hover:bg-green-800 hover:text-white transition duration-300 transform hover:scale-105">
+      <div className="flex justify-center mt-8 xl:h-full sm:h-6">
+        <div className="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md xl:w-64 w-48  rounded-xl bg-clip-border hover:bg-green-800 hover:text-white transition duration-300 transform hover:scale-105">
           <div className="p-6 pt-0">
             <button
-              className="flex items-center gap-2 ml-20 py-2 font-sans text-xs font-bold text-center text-pink-500 uppercase align-middle transition-all rounded-lg select-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+              className="flex  gap-2 xl:ml-20  ml-16 py-2  font-sans text-xs font-bold text-center text-pink-500 uppercase  transition-all rounded-lg select-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               data-ripple-dark="true"
             >
               <svg
