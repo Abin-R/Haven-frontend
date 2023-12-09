@@ -4,17 +4,16 @@ import Login from './pages/Login';
 import Register from './pages/register';
 import LoginProtection from './Store/LoginProtection';
 import Dashboard from './pages/Admin/Dashboard';
-// import Users from './pages/Admin/Users';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import ResetPassword from './pages/ForgotPassword/ResetPassword';
 import ProtectedUrl from './Store/ProtectedUrl';
 import Subscription from './pages/Subscription';
 import PrivateChatRoute from './Store/PrivateChatRoute';
 import { useSelector } from 'react-redux';
-// import UserListRoutes from './Routes/UserListRoutes';
+
 import AllUsers from './pages/Admin/UsersList/AllUsers';
 import NormalUsers from './pages/Admin/UsersList/Users';
-import Premium from './pages/Admin/UsersList/premium';
+import Premium from './pages/Admin/UsersList/Premium.jsx';
 import Super from './pages/Admin/UsersList/Super';
 import Admin from './pages/Admin/UsersList/Admin';
 import SubscriptionList from './pages/Admin/Finance/SubscriptionList';
@@ -36,8 +35,7 @@ import YourPosts from './pages/Posts/YourPosts';
 import Checkout from './pages/Checkout';
 import Gallery from './pages/Gallery';
 import Invoice from './components/Invoice/invoice';
-// import VideoCarousel from './pages/Posts/PostEvent';
-// import BookingPayment from './pages/SumitEvent/BookingPayment';
+
 
 
 function App() {
@@ -45,7 +43,7 @@ function App() {
     const userLoggedIn = useSelector((state) => state.user.role)
     return (
         <>
-        {/* <UserListRoutes/> */}
+    
         <Router>
             <Routes>
                 {/* USERSIDE */}
@@ -55,7 +53,7 @@ function App() {
                 <Route path="/create-events" element={<YourEvents />} />
                 <Route path="/Your-events" element={<YourEvent />} />
                 <Route path="/posts" element={<Posts />} />
-                {/* <Route path="/video" element={<VideoCarousel />} /> */}
+          
                 <Route path="/gallery" element={<Gallery />} />
                 <Route path="/checkout/:eventId" element={<Checkout />} />
                 <Route path="/invoice/:eventId" element={<Invoice/>} />
@@ -65,7 +63,7 @@ function App() {
                 <Route path="/chat" element={<PrivateChatRoute><ChatComponent /></PrivateChatRoute>} />
                 <Route path="/create-post/:eventId" element={<CreatePosts />} />
                 <Route path="/create-review/:postid" element={<CreateReview />} />
-                {/* <Route path="/posts-1" element={<PostDetail />} /> */}
+           
                 <Route path="/post/:postId" element={<PostDetail/>} />
                 <Route path="/attendees-event/:eventId" element={<Attendees/>} />
                 <Route path="/event/:eventId" element={<SingleEvent/>} />
