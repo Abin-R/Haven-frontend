@@ -15,7 +15,7 @@ const navigation = [
   { name: "Posts", to: "/posts", current: false },
   { name: "Gallery", to: "/gallery", current: false },
   { name: "Events", to: "/events", current: false },
-  { name: "Blog", to: "/eventsw", current: false },
+
 ];
 
 const easy = [
@@ -32,7 +32,7 @@ export default function NavbarAdmin() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdownOpen2, setIsDropdownOpen2] = useState(false);
 
-  const { isAuthenticated, username, role } = useSelector(
+  const { isAuthenticated, username, role, image } = useSelector(
     (state) => state.user
   );
 
@@ -105,7 +105,7 @@ export default function NavbarAdmin() {
                 <div className="flex items-center justify-center hidden lg:flex lg:gap-x-12 flex-1">
                   {navigation.map((item) =>
                     item.name === "Events" &&
-                    (role === "super" || role === "premium") ? (
+                    (role === "super" || role === "premium" ) ? (
                       <div
                         key={item.name}
                         className="relative group"
@@ -124,7 +124,6 @@ export default function NavbarAdmin() {
                               ? " text-blue-600 text-lg font-bold"
                               : "text-gray-800 text-lg font-bold"
                           }`}
-                          
                         >
                           {item.name}
                           {isDropdownOpen && (
@@ -141,7 +140,7 @@ export default function NavbarAdmin() {
                                     to="/your-events"
                                     class="block px-4 py-2 text-black  hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                   >
-                                   Your Events
+                                    Your Events
                                   </Link>
                                 </li>
                                 <li>
@@ -152,9 +151,6 @@ export default function NavbarAdmin() {
                                     Upcoming Events
                                   </Link>
                                 </li>
-                                
-                                
-                                
                               </ul>
                             </div>
                           )}
@@ -162,8 +158,8 @@ export default function NavbarAdmin() {
                           <span className="absolute bottom-0.5 right-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
                         </Link>
                       </div>
-                    ) :item.name === "Posts" &&
-                    (role === "super" || role === "premium") ?(
+                    ) : item.name === "Posts" &&
+                      (role === "super" || role === "premium") ? (
                       <div
                         key={item.name}
                         className="relative group"
@@ -182,7 +178,6 @@ export default function NavbarAdmin() {
                               ? " text-blue-600 text-lg font-bold"
                               : "text-gray-800 text-lg font-bold"
                           }`}
-                          
                         >
                           {item.name}
                           {isDropdownOpen2 && (
@@ -199,7 +194,7 @@ export default function NavbarAdmin() {
                                     to="/posts"
                                     class="block px-4 py-2 text-black  hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                   >
-                                   Posts
+                                    Posts
                                   </Link>
                                 </li>
                                 <li>
@@ -210,9 +205,6 @@ export default function NavbarAdmin() {
                                     Your posts
                                   </Link>
                                 </li>
-                                
-                                
-                                
                               </ul>
                             </div>
                           )}
@@ -220,7 +212,7 @@ export default function NavbarAdmin() {
                           <span className="absolute bottom-0.5 right-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
                         </Link>
                       </div>
-                    ): (
+                    ) : (
                       <Link
                         key={item.name}
                         to={item.to}
@@ -313,19 +305,25 @@ export default function NavbarAdmin() {
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
                     <div>
-                      <Menu.Button className="relative flex rounded-full  bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                      <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="absolute -inset-1.5" />
                         <span className="sr-only">Open user menu</span>
-                        <div className="">
-                        <img
-                          className="h-8 w-8  rounded-full"
-                          src="https://images.pexels.com/photos/4420634/pexels-photo-4420634.jpeg?auto=compress&cs=tinysrgb&w=600"
-                          alt=""
-                        />
-
-                        </div>
+                        {image ? (
+                          <img
+                            className="h-8 w-8 rounded-full"
+                            src={`http://127.0.0.1:8000${image}`}
+                            alt=""
+                          />
+                        ) : (
+                          <img
+                            className="h-10 w-11 rounded-full"
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPoKRNFH1uDgHIZbFkB6yly-CJeSlTz6jX-GDBkl276u2PQELltfitbph7Pw&s"
+                            alt=""
+                          />
+                        )}
                       </Menu.Button>
                     </div>
+
                     <Transition
                       as={Fragment}
                       enter="transition ease-out duration-100"
@@ -426,47 +424,43 @@ export default function NavbarAdmin() {
                 </Link>
               ))}
               {easy.map((item) =>
-                    // Check the user's role and conditionally render links
-                    item.name === "Notification" && role === "premium" ? (
-                      <Link
-                        key={item.name}
-                        to={item.to}
-                        className={`block rounded-md px-1 py-2 text-base relative group ${
-                          currentLocation.pathname === item.to
-                            ? " text-blue-600 text-lg font-bold"
-                            : "text-gray-800 text-lg font-bold"
-                        }`}
-                        aria-current={
-                          currentLocation.pathname === item.to
-                            ? "page"
-                            : undefined
-                        }
-                      >
-                        {item.name}
-                        <span className="absolute bottom-0.5 left-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
-                        <span className="absolute bottom-0.5 right-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
-                      </Link>
-                    ) : item.name === "Subscription" && role === "user" ? (
-                      <Link
-                        key={item.name}
-                        to={item.to}
-                        className={`block rounded-md px-1 py-2 text-base relative group ${
-                          currentLocation.pathname === item.to
-                            ? " text-blue-600 text-lg font-bold"
-                            : "text-gray-800 text-lg font-bold"
-                        }`}
-                        aria-current={
-                          currentLocation.pathname === item.to
-                            ? "page"
-                            : undefined
-                        }
-                      >
-                        {item.name}
-                        <span className="absolute bottom-0.5 left-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
-                        <span className="absolute bottom-0.5 right-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
-                      </Link>
-                    ) : null
-                  )}
+                // Check the user's role and conditionally render links
+                item.name === "Notification" && role === "premium" ? (
+                  <Link
+                    key={item.name}
+                    to={item.to}
+                    className={`block rounded-md px-1 py-2 text-base relative group ${
+                      currentLocation.pathname === item.to
+                        ? " text-blue-600 text-lg font-bold"
+                        : "text-gray-800 text-lg font-bold"
+                    }`}
+                    aria-current={
+                      currentLocation.pathname === item.to ? "page" : undefined
+                    }
+                  >
+                    {item.name}
+                    <span className="absolute bottom-0.5 left-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
+                    <span className="absolute bottom-0.5 right-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
+                  </Link>
+                ) : item.name === "Subscription" && role === "user" ? (
+                  <Link
+                    key={item.name}
+                    to={item.to}
+                    className={`block rounded-md px-1 py-2 text-base relative group ${
+                      currentLocation.pathname === item.to
+                        ? " text-blue-600 text-lg font-bold"
+                        : "text-gray-800 text-lg font-bold"
+                    }`}
+                    aria-current={
+                      currentLocation.pathname === item.to ? "page" : undefined
+                    }
+                  >
+                    {item.name}
+                    <span className="absolute bottom-0.5 left-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
+                    <span className="absolute bottom-0.5 right-1/2 w-0 h-1 bg-slate-500 group-hover:w-1/2 group-hover:transition-all"></span>
+                  </Link>
+                ) : null
+              )}
             </div>
           </Disclosure.Panel>
         </>

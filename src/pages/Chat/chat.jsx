@@ -6,7 +6,7 @@ import axios from "axios";
 const ChatComponent = () => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
-  const { username } = useSelector((state) => state.user);
+  const { username, image } = useSelector((state) => state.user);
   const socket = new WebSocket("ws://127.0.0.1:8000/ws/chat/general/");
   const [users, setUsers] = useState([]);
 
@@ -15,8 +15,8 @@ const ChatComponent = () => {
       try {
         const response = await axios.get("http://127.0.0.1:8000/admins/users/");
         if (response.status === 200) {
-          
           setUsers(response.data.userlist);
+          console.log(response.data.userlist);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -68,7 +68,7 @@ const ChatComponent = () => {
         );
         if (response.ok) {
           const data = await response.json();
-         
+
           setMessages(data);
         } else {
           console.error("Failed to fetch messages from the backend");
@@ -94,6 +94,8 @@ const ChatComponent = () => {
     };
   }, []);
 
+  
+
   return (
     <div>
       <NavbarAdmin />
@@ -103,7 +105,7 @@ const ChatComponent = () => {
             <div className="flex flex-col items-center bg-indigo-100 border border-gray-200 mt-4 w-full py-6 px-4 rounded-lg">
               <div className="h-20 w-20 rounded-full border overflow-hidden">
                 <img
-                  src="https://avatars3.githubusercontent.com/u/2763884?s=128"
+                  src={`http://127.0.0.1:8000${image}`}
                   alt="Avatar"
                   className="h-full w-full"
                 />
@@ -124,23 +126,29 @@ const ChatComponent = () => {
                   1
                 </span>
               </div>
-              <div className="flex flex-col space-y-1 mt-4 -mx-2 h-48 overflow-y-auto">
-                {users.map((user) => (
-                    user.is_premium && user.username !== username &&(
-                  <button
-                    key={user.id} // Make sure to use a unique key
-                    className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2"
-                  >
-                    <div className="flex items-center justify-center h-8 w-8  rounded-full" style={{
-                                backgroundColor: getRandomColor(user.username),
-                              }}>
-                      {user.username.charAt(0)}
-                    </div>
-                    <div className="ml-2 text-sm font-semibold">
-                      {user.username}
-                    </div>
-                  </button>)
-                ))}
+              <div className="flex flex-col space-y-1 mt-4 -mx-2 h-48 overflow-y-hidden ">
+                {users.map(
+                  (user) =>
+                    user.is_premium &&
+                    user.username !== username && (
+                      <button
+                        key={user.id} // Make sure to use a unique key
+                        className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2"
+                      >
+                        <div
+                          className="flex items-center justify-center h-8 w-8  rounded-full"
+                          style={{
+                            backgroundColor: getRandomColor(user.username),
+                          }}
+                        >
+                          {user.username.charAt(0)}
+                        </div>
+                        <div className="ml-2 text-sm font-semibold">
+                          {user.username}
+                        </div>
+                      </button>
+                    )
+                )}
               </div>
             </div>
           </div>
@@ -149,37 +157,56 @@ const ChatComponent = () => {
               <div className="flex flex-col h-full overflow-x-auto mb-4">
                 <div className="flex flex-col h-full">
                   <div className="grid grid-cols-12 gap-y-2">
-                    {messages.map((msg, index) => (
-                      <div
-                        key={index}
-                        className="col-start-1 col-end-13 p-3 rounded-lg"
-                      >
-                        {msg.sender === username ? (
-                          <div className="flex items-center justify-start flex-row-reverse">
-                            <div className="flex items-center font-bold text-xs justify-center px-3 ml-2 h-12 w-12 rounded-full bg-indigo-500 flex-shrink-0">
-                              {msg.sender}
+                    {messages.map((msg, index) => {
+                      const senderUser = users.find(
+                        (user) => user.username === msg.sender
+                      );
+
+                      return (
+                        <div
+                          key={index}
+                          className="col-start-1 col-end-13 p-3 rounded-lg"
+                        >
+                          {msg.sender === username ? (
+                            <div className="flex items-center justify-start flex-row-reverse">
+                              <div className="flex flex-col">
+                                <div className="flex items-center font-bold text-xs justify-center  flex-shrink-0">
+                                  <img
+                                    src={`http://127.0.0.1:8000${image}`} // Update this line
+                                    alt="User Profile"
+                                    className="h-12 w-12 rounded-full flex-shrink-0"
+                                  />
+                                </div>
+                                <div className="font-semibold text-xs justify-center px-5 flex">
+                                  {msg.sender}
+                                </div>
+                              </div>
+                              <div className="relative ml-4 text-sm bg-white py-3 px-3 shadow rounded-xl">
+                                <div>{msg.message_content}</div>
+                              </div>
                             </div>
-                            <div className="relative ml-4 text-sm bg-white py-3 px-3 shadow rounded-xl">
-                              <div>{msg.message_content}</div>
+                          ) : (
+                            <div className="flex items-center justify-end  flex-row-reverse">
+                              <div className="relative mr-2 text-sm bg-white py-3 px-3 shadow rounded-xl">
+                                <div>{msg.message_content}</div>
+                              </div>
+                              <div>
+                                <div className="flex flex-col items-center font-bold text-xs flex-shrink-0">
+                                  <img
+                                    src={`http://127.0.0.1:8000${senderUser.image}`} // Update this line
+                                    alt="User Profile"
+                                    className="h-12 w-12 rounded-full flex-shrink-0"
+                                  />
+                                </div>
+                                <div className="font-semibold text-xs justify-center px-5 flex">
+                                  {msg.sender}
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        ) : (
-                          <div className="flex items-center justify-end  flex-row-reverse">
-                            <div className="relative ml-2 text-sm bg-white py-3 px-4 shadow rounded-xl">
-                              <div>{msg.message_content}</div>
-                            </div>
-                            <div
-                              className="flex items-center font-bold text-xs px-1.5 h-12 w-12 rounded-full  flex-shrink-0"
-                              style={{
-                                backgroundColor: getRandomColor(msg.sender),
-                              }}
-                            >
-                              {msg.sender}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    ))}
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>

@@ -31,6 +31,12 @@ import CreatePosts from './pages/Posts/CreatePosts';
 import EventList from './pages/Admin/EventList';
 import PostList from './pages/Admin/PostList';
 import ChatComponent from './pages/Chat/chat';
+import CreateReview from './pages/Posts/CreateReview';
+import YourPosts from './pages/Posts/YourPosts';
+import Checkout from './pages/Checkout';
+import Gallery from './pages/Gallery';
+import Invoice from './components/Invoice/invoice';
+// import VideoCarousel from './pages/Posts/PostEvent';
 // import BookingPayment from './pages/SumitEvent/BookingPayment';
 
 
@@ -49,8 +55,16 @@ function App() {
                 <Route path="/create-events" element={<YourEvents />} />
                 <Route path="/Your-events" element={<YourEvent />} />
                 <Route path="/posts" element={<Posts />} />
+                {/* <Route path="/video" element={<VideoCarousel />} /> */}
+                <Route path="/gallery" element={<Gallery />} />
+                <Route path="/checkout/:eventId" element={<Checkout />} />
+                <Route path="/invoice/:eventId" element={<Invoice/>} />
+
+          
+                <Route path="/your-posts" element={<YourPosts />} />
                 <Route path="/chat" element={<PrivateChatRoute><ChatComponent /></PrivateChatRoute>} />
                 <Route path="/create-post/:eventId" element={<CreatePosts />} />
+                <Route path="/create-review/:postid" element={<CreateReview />} />
                 {/* <Route path="/posts-1" element={<PostDetail />} /> */}
                 <Route path="/post/:postId" element={<PostDetail/>} />
                 <Route path="/attendees-event/:eventId" element={<Attendees/>} />

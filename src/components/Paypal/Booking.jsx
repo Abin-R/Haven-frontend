@@ -2,7 +2,7 @@
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useState } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
+// import axios from "axios";
 import { useSelector } from "react-redux";
 import { Modal, Box, Typography} from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -13,7 +13,7 @@ import axiosInstance from "../../Store/Axios";
 
 
 // eslint-disable-next-line react/prop-types
-const Booking = ({ event, prices }) => {
+const Booking = ({ event, prices,ticket }) => {
     console.log("-------------",prices)
   const { username } = useSelector((state) => state.user);
   const [, setPaidFor] = useState(false);
@@ -52,6 +52,7 @@ return axiosInstance.post(
       event: event,     // Change to match the key used in the backend
       prices: prices,   // Change to match the key used in the backend
       transactionId: details.id,
+      ticket:ticket
     },
     config
   );
@@ -166,9 +167,8 @@ return axiosInstance.post(
               margin: "20px 0", // Add margin for better spacing
             }}
           >
-            Congratulations, {username} your subscription is now{" "}
-            <span style={{ color: "#87CEFA" }}>active</span> and ready to unlock a
-            world of exclusive benefits!
+            Congratulations, {username}! 🎉 Your Booking is a Success! 🌟 Our team will swiftly verify the details and keep you posted. 🚀 Exciting times ahead! 🎊
+
           </Typography>
           <button
             // variant="contained"

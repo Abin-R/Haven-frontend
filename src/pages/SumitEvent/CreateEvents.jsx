@@ -98,6 +98,7 @@ function YourEvents() {
 
   return (
     <div>
+      
       <NavbarAdmin />
       <div className="mt-36 flex justify-center font-bold text-4xl">
         Create Venue Event

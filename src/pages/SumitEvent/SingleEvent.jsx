@@ -2,45 +2,55 @@ import { useState, useEffect } from "react";
 import NavbarAdmin from "../../components/Navbar";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import TicketModal from "../../components/SubmitEvents/TicketModal";
+import { useNavigate } from "react-router-dom";
+
+// import TicketModal from "../../components/SubmitEvents/TicketModal";
 
 function SingleEvent() {
   const [event, setEvent] = useState({});
-  console.log("Price in SingleEvent:", event.cost);
+  const navigate = useNavigate();
+  // console.log("Price in SingleEvent:", event.cost);
   const [activeSection, setActiveSection] = useState("details");
   const { eventId } = useParams();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [, setSelectedTickets] = useState(0);
-  const [ticketCount, setTicketCount] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(parseFloat(event.cost));
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [, setSelectedTickets] = useState(0);
+  // const [ticketCount, setTicketCount] = useState(1);
+  // const [totalPrice, setTotalPrice] = useState(parseFloat(event.cost));
 
-  useEffect(() => {
-    // Update total price whenever ticket count changes
-    setTotalPrice(parseFloat(event.cost) * ticketCount);
-  }, [ticketCount, event.cost]);
+  // useEffect(() => {
+  //   // Update total price whenever ticket count changes
+  //   setTotalPrice(parseFloat(event.cost) * ticketCount);
+  // }, [ticketCount, event.cost]);
 
-  const handleIncrement = () => {
-    setTicketCount(ticketCount + 1);
+  const handlePlaceOrder = () => {
+    // Here you can add logic related to placing the order
+    // For example, you might want to make an API call to process the order
+    // After handling the order, navigate to the checkout page
+    navigate(`/checkout/${eventId}`); // Replace eventId with the actual event ID
   };
 
-  const handleDecrement = () => {
-    if (ticketCount > 1) {
-      setTicketCount(ticketCount - 1);
-    }
-  };
+  // const handleIncrement = () => {
+  //   setTicketCount(ticketCount + 1);
+  // };
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
+  // const handleDecrement = () => {
+  //   if (ticketCount > 1) {
+  //     setTicketCount(ticketCount - 1);
+  //   }
+  // };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
+  // const handleOpenModal = () => {
+  //   setIsModalOpen(true);
+  // };
 
-  const handleBuyTickets = (count) => {
-    // Handle the logic for buying tickets
-    setSelectedTickets(count);
-  };
+  // const handleCloseModal = () => {
+  //   setIsModalOpen(false);
+  // };
+
+  // const handleBuyTickets = (count) => {
+  //   // Handle the logic for buying tickets
+  //   setSelectedTickets(count);
+  // };
 
   const handleSectionChange = (section) => {
     setActiveSection(section);
@@ -162,38 +172,24 @@ function SingleEvent() {
           wolf less so peskily blinked.
         </p>
       </div>
-      <div className="flex items-end flex-col justify-end ">
-        <div className="flex items-center mb-4 mx-2 p-5">
-          <div className="font-semibold text-lg mx-3">Tickets</div>
-
-          <button className="px-4 py-2 border" onClick={handleDecrement}>
-            -
-          </button>
-          <span className="mx-4">{ticketCount}</span>
-          <button className="px-4 py-2 border" onClick={handleIncrement}>
-            +
-          </button>
-        </div>
-        <h2 className="text-2xl font-bold mb-4 mx-8">
-          Total Price - {totalPrice}
-        </h2>
+      {event.ticket_count > 0 ? (
         <button
-          type="button"
-          className="text-white py-2.5 mx-4 my-8 lg:mx-8 bg-green-700 hover:bg-green-800 font-mono focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-xl text-base px-5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-          onClick={handleOpenModal}
+          type="submit"
+          onClick={handlePlaceOrder}
+          className="mt-4  w-1/2 mx-80 mr-96 inline-flex  items-center justify-center rounded-2xl bg-teal-600 py-2.5 px-6 text-base font-semibold tracking-wide text-white text-opacity-80 outline-none ring-offset-2 transition hover:text-opacity-100 focus:ring-2 focus:ring-teal-500 sm:text-lg"
         >
           Buy Tickets
         </button>
+      ) : (
+        <button
+          type="submit"
+          className="mt-4  w-1/2 mx-80 mr-96 inline-flex  items-center justify-center rounded-2xl bg-red-600  py-2.5 px-6 text-base font-semibold tracking-wide text-white outline-none ring-offset-2 transition  focus:ring-2 focus:ring-teal-500 sm:text-lg"
+          disabled
 
-        {isModalOpen && (
-          <TicketModal
-            price={totalPrice}
-            event={event.title}
-            onClose={handleCloseModal}
-            onBuyTickets={handleBuyTickets}
-          />
-        )}
-      </div>
+        >
+          Sold Out
+        </button>
+      )}
 
       <div>
         <div className="lg:p-9 py-7 mt-4">

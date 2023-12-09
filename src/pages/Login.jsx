@@ -11,6 +11,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 
+
 // import axiosInstance from "../Store/Axios";
 
 function Login() {
@@ -37,20 +38,9 @@ function Login() {
         username: Name,
         password: password,
       });
-      console.log("Login successful:", response.data);
+      console.log(response.data)
       localStorage.setItem("access_token", response.data.access);
       localStorage.setItem("refresh_token", response.data.refresh);
-
-      console.log("Stored access token:", localStorage.getItem("access_token"));
-      console.log(
-        "Stored refresh token eeeeee:",
-        localStorage.getItem("refresh_token")
-      );
-
-      console.log("Full response data:", response.data);
-
-      // Check the 'access_token' property specifically
-      console.log("Access token received:", response.data.access);
       localStorage.setItem("username", response.data.username);
       //   localStorage.setItem("id", response.data.id);
 
@@ -59,7 +49,9 @@ function Login() {
         payload: {
           username: response.data.username,
           userId: response.data.userId,
-          role: response.data.role, // Check admin status or adjust according to your data
+          role: response.data.role,
+          reneue: response.data.reneue,
+          image:response.data.profileImage,          // Check admin status or adjust according to your data
           isAuthenticated: true,
           // Add other relevant user data here
         },

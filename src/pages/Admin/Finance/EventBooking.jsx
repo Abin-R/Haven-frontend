@@ -9,19 +9,39 @@ function EventBooking() {
   useEffect(() => {
     // Fetch subscription data from the backend when the component mounts
     const fetchData = async () => {
-        try {
-          const response = await axios.get("http://127.0.0.1:8000/admins/event-boooking/");
-          const data = response.data;
-          console.log("API Response:", data); // Add this line
-          setBooking(data);
-        } catch (error) {
-          console.error("Error fetching subscription data:", error);
-        }
-      };
-      
+      try {
+        const response = await axios.get(
+          "http://127.0.0.1:8000/admins/event-boooking/"
+        );
+        const data = response.data;
+        console.log("API Response:", data); // Add this line
+        setBooking(data);
+      } catch (error) {
+        console.error("Error fetching subscription data:", error);
+      }
+    };
 
     fetchData();
   }, []); // Empty dependency array means this effect runs once when the component mounts
+
+  const handleApprove = async (bookingId) => {
+    try {
+      // Send a PATCH request to update booking_status to 'CONFIRMED'
+      await axios.patch(
+        `http://127.0.0.1:8000/admins/approve-booking/${bookingId}/`
+      );
+  
+      // Update the local state to reflect the approval
+      setBooking((prevBookings) =>
+        prevBookings.map((booking) =>
+          booking.id === bookingId ? { ...booking, booking_status: 'CONFIRMED' } : booking
+        )
+      );
+    } catch (error) {
+      console.error("Error approving booking:", error);
+    }
+  };
+  
 
   return (
     <div>
@@ -80,42 +100,43 @@ function EventBooking() {
         </div>
 
         <div className="mt-6 overflow-hidden rounded-xl border shadow">
-          <table className="min-w-full border-separate border-spacing-y-2 border-spacing-x-2">
+          <table className="min-w-full border-separate border-spacing-y-2 border-spacing-x-2 ml-10">
             <thead className="hidden border-b lg:table-header-group">
               <tr className="">
-                <td
-                  width="50%"
-                  className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-6"
-                >
-                 Name Of Event
+                <td className="whitespace-normal py-3 text-base font-medium text-gray-500 sm:px-6">
+                  Name Of Event
                 </td>
 
-                <td className="whitespace-normal py-2 text-sm font-medium text-gray-500 sm:px-6">
-                 Name
+                <td className="whitespace-normal py-2 text-base font-medium text-gray-500 sm:px-6">
+                  Name
                 </td>
-                <td className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-6">
+                <td className="whitespace-normal py-4 text-base font-medium text-gray-500 sm:px-6">
                   Date
                 </td>
 
-                <td className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-6">
+                <td className="whitespace-normal py-4 text-base font-medium text-gray-500 sm:px-6">
+                  Ticket count
+                </td>
+                <td className="whitespace-normal py-4 text-base font-medium text-gray-500 sm:px-6">
                   Amount
                 </td>
 
-                <td className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-6">
+                <td className="whitespace-normal py-4 text-base font-medium text-gray-500 sm:px-6">
                   Status
+                </td>
+
+                <td className="whitespace-normal py-3 px-6 text-base font-medium text-gray-500 sm:px-9 ml-10">
+                  Approve
                 </td>
               </tr>
             </thead>
 
             {/* ... */}
-            <tbody className="lg:border-gray-300">
+            <tbody className="lg:border-gray-300 ">
               {booking.map((subscription, index) => (
-                <tr key={index} className="">
-                  <td
-                    width="50%"
-                    className="whitespace-no-wrap py-4 text-sm font-bold text-gray-900 sm:px-6"
-                  >
-                   {subscription.event.title}
+                <tr key={index} className="px-10 mx-10">
+                  <td className="whitespace-no-wrap py-4 px-8 mx-9 text-sm font-bold text-gray-900 sm:px-10">
+                    {subscription.event.title}
                     <div className="mt-1 lg:hidden">
                       <p className="font-normal text-gray-500">
                         {subscription.event.title}
@@ -123,40 +144,60 @@ function EventBooking() {
                     </div>
                   </td>
 
-                  <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
-                  {subscription.user.username}
+                  <td className="whitespace-no-wrap hidden py-4  text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
+                    {subscription.user.username}
                   </td>
 
                   <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
-                    {subscription.transaction.transaction_date}
+                    {new Date(
+                      subscription.transaction.transaction_date
+                    ).toLocaleDateString("en-US", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                    {/* {subscription.transaction.transaction_date} */}
                   </td>
 
+                  <td className="whitespace-no-wrap py-4 px-16 text-right text-sm text-gray-600 lg:text-left">
+                    <div>{subscription.ticket_count}</div>
+                  </td>
                   <td className="whitespace-no-wrap py-4 px-6 text-right text-sm text-gray-600 lg:text-left">
-                    <div
-                      
-                    >
-                       ${subscription.transaction.amount}
-                    </div>
+                    <div>${subscription.transaction.amount}</div>
                   </td>
 
                   <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-white sm:px-6 lg:table-cell">
-                    <div
-                      className={`inline-flex items-center rounded-full ${
-                        subscription.booking_status === "CONFIRMED"
-                          ? "bg-green-500"
-                          : subscription.booking_status === "Canceled"
-                          ? "bg-green-500"
-                          : "bg-green-500 text-white w-14 text-center"
-                      } py-1 px-2 text-${
-                        subscription.boooking_status === "CONFIRMED"
-                          ? "bg-green-500"
-                          : subscription.booking_status === "Canceled"
-                          ? "red-500"
-                          : "white "
-                      }`}
-                    >
-                      Paid
-                    </div>
+                    {subscription.transaction.status === "SUCCESS" ? (
+                      <div className="bg-green-400 px-1 me-2 flex justify-center items-center py-1 rounded-xl text-sm">
+                        Paid
+                      </div>
+                    ) : (
+                      <div className="bg-red-400 px-1 me-2 flex justify-center items-center py-1 rounded-xl text-sm">
+                        Pending
+                      </div>
+                    )}
+                  </td>
+
+                  <td className="whitespace-no-wrap py-4 px-6 text-right text-sm text-gray-600 lg:text-left">
+                    {subscription.booking_status === "PENDING" ? (
+                      <div>
+                        <button
+                          onClick={() => handleApprove(subscription.id)}
+                          className="text-white bg-blue-700 mx-2 font-medium rounded-lg text-sm px-5 py-2 me-4 mb-2"
+                        >
+                          Approve
+                        </button>
+                      </div>
+                    ) : (
+                      <div>
+                        <button
+                          disabled
+                          className="text-white bg-teal-700 font-medium rounded-lg text-sm px-5 py-2 me-4 mb-2"
+                        >
+                          Approved
+                        </button>
+                      </div>
+                    )}
                   </td>
                 </tr>
               ))}

@@ -150,7 +150,7 @@ function Event() {
           <span className="px-1 text-xs mt-1">{event.location}</span>
         </p>
         <p className="flex flex-col absolute top-56 bg-red-600 rounded-xl  text-white font-semibold py-1 px-4 text-sm mx-64 me-64 whitespace-nowrap">
-          {event.soldOut ? "Sold Out" : "Buy Tickets"}
+          {event.ticket_count >0 ? "Buy Tickets"  : "Sold Out"}
         </p>
       </div>
     </div>

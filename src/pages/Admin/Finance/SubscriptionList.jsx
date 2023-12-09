@@ -1,27 +1,70 @@
 import { useState, useEffect } from "react";
 import Finance from "../Finance";
 import axios from "axios";
+import React from 'react';
+
 
 function SubscriptionList() {
   // State to store subscription data
   const [subscriptions, setSubscriptions] = useState([]);
+  // const [subscribed_users, setSubscribed_users] = useState([]);
 
   useEffect(() => {
     // Fetch subscription data from the backend when the component mounts
     const fetchData = async () => {
-        try {
-          const response = await axios.get("http://127.0.0.1:8000/admins/subscription-list/");
-          const data = response.data;
-          console.log("API Response:", data); // Add this line
-          setSubscriptions(data);
-        } catch (error) {
-          console.error("Error fetching subscription data:", error);
-        }
-      };
-      
+      try {
+        const response = await axios.get(
+          "http://127.0.0.1:8000/admins/subscription-list/"
+        );
+        const data = response.data;
+        console.log("API Response:", data);
+        console.log("subscribed_users",data.subscribed_users) // Add this line
+        setSubscriptions(data);
+        
+      } catch (error) {
+        console.error("Error fetching subscription data:", error);
+      }
+    };
 
     fetchData();
   }, []); // Empty dependency array means this effect runs once when the component mounts
+
+  const isSubscriptionExpired = (timestamps) => {
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    return new Date(timestamps) < thirtyDaysAgo;
+  };
+
+  const handleRenew = async (subscriptionId) => {
+    try {
+      // Send a POST request to the backend for subscription renewal
+      const response = await axios.post(
+        `http://127.0.0.1:8000/admins/renew-subscription/${subscriptionId}/`
+      );
+
+      // Check if the response status is 406
+      if (response.status === 406) {
+        // Display a specific message for 406 status
+        alert("Mail has already been sent for this subscription!");
+      } else {
+        // Update the local state to reflect the renewal
+        setSubscriptions((prevSubscriptions) =>
+          prevSubscriptions.map((subscription) =>
+            subscription.id === subscriptionId
+              ? { ...subscription, renewed: true }
+              : subscription
+          )
+        );
+
+        // Display a success message to the user
+        alert("Subscription renewed successfully!");
+      }
+    } catch (error) {
+      // Handle the error and display an error message
+      console.error("Error renewing subscription:", error);
+      alert("Error renewing subscription. Please try again later.");
+    }
+  };
 
   return (
     <div>
@@ -84,14 +127,20 @@ function SubscriptionList() {
             <thead className="hidden border-b lg:table-header-group">
               <tr className="">
                 <td
-                  width="50%"
+                  width=""
                   className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-6"
                 >
-                  Invoice
+                  Renewed Date
+                </td>
+                <td
+                  width=""
+                  className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-6"
+                >
+                  End Date
                 </td>
 
                 <td className="whitespace-normal py-2 text-sm font-medium text-gray-500 sm:px-6">
-                 Name
+                  Name
                 </td>
                 <td className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-6">
                   Date
@@ -104,6 +153,9 @@ function SubscriptionList() {
                 <td className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-6">
                   Status
                 </td>
+                <td className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-6">
+                  Renew
+                </td>
               </tr>
             </thead>
 
@@ -111,53 +163,81 @@ function SubscriptionList() {
             <tbody className="lg:border-gray-300">
               {subscriptions.map((subscription, index) => (
                 <tr key={index} className="">
-                  <td
-                    width="50%"
-                    className="whitespace-no-wrap py-4 text-sm font-bold text-gray-900 sm:px-6"
-                  >
-                    {subscription.timestamp}
+                  <td className="whitespace-no-wrap py-4 text-sm font-bold text-gray-900 sm:px-6">
+                    {new Date(subscription.timestamps).toLocaleDateString(
+                      "en-US",
+                      {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      }
+                    )}
                     <div className="mt-1 lg:hidden">
                       <p className="font-normal text-gray-500">
                         {subscription.transaction_id}
+                        hiii{subscription.id}
                       </p>
                     </div>
                   </td>
 
                   <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
-                  {subscription.user.username}
+                    {subscription.timestamps &&
+                      new Date(
+                        new Date(subscription.timestamps).setDate(
+                          new Date(subscription.timestamps).getDate() + 30
+                        )
+                      ).toLocaleDateString("en-US", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                  </td>
+                  <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
+                    {subscription.user.username}
                   </td>
 
                   <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
-                  ${subscription.amount}
+                    ${subscription.subscribed_users.id}
                   </td>
 
                   <td className="whitespace-no-wrap py-4 px-6 text-right text-sm text-gray-600 lg:text-left">
-                    <div
-                      
-                    >
-                      {subscription.subscription.subscription_type}
-                    </div>
+                    <div>{subscription.subscription.subscription_type}</div>
                   </td>
 
-                  <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-white sm:px-6 lg:table-cell">
-                    <div
-                      className={`inline-flex items-center rounded-full ${
-                        subscription.status === "Complete"
-                          ? "bg-green-500"
-                          : subscription.status === "Canceled"
-                          ? "bg-green-500"
-                          : "bg-green-500 text-white w-14 text-center"
-                      } py-1 px-2 text-${
-                        subscription.status === "Complete"
-                          ? "bg-green-500"
-                          : subscription.status === "Canceled"
-                          ? "red-500"
-                          : "white "
-                      }`}
-                    >
-                      Paid
-                    </div>
+                  <td className="whitespace-no-wrap py-4 px-6 text-right text-sm text-gray-600 lg:text-left">
+                    {isSubscriptionExpired(subscription.timestamps) ? (
+                      <button
+                        onClick={() => handleRenew(subscription.id)}
+                        className="text-white bg-red-500 mx-2 font-medium rounded-xl text-xs whitespace-nowrap px-3 py-1 me-4 mb-2"
+                      >
+                        Not paid
+                      </button>
+                    ) : (
+                      <div className="text-white bg-green-500 mx-2 flex justify-center font-medium rounded-xl text-xs whitespace-nowrap px-3 py-1 me-4 mb-2">
+                        paid
+                      </div>
+                    )}
                   </td>
+                  <td className="whitespace-no-wrap py-4 px-6 text-right text-sm text-gray-600 lg:text-left">
+  {subscription.subscribed_users.map(user => (
+    <React.Fragment key={user.id}>
+      {user.is_reneue ? (
+        <div className="text-1xl font-bold mx-4">hii</div>
+      ) : isSubscriptionExpired(subscription.timestamps) ? (
+        <button
+          onClick={() => handleRenew(subscription.id)}
+          className="text-white bg-blue-700 mx-2 font-medium rounded-lg text-sm px-5 py-2 me-4 mb-2"
+        >
+          Renew
+        </button>
+      ) : (
+        <div className="text-1xl font-bold">Renewed</div>
+      )}
+    </React.Fragment>
+  ))}
+</td>
+
+
                 </tr>
               ))}
             </tbody>

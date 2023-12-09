@@ -31,7 +31,7 @@ function BlockButton({ userId, isActive }) {
     <div>
       <td className="px-2 ml-72 py-8  whitespace-nowrap text-right text-sm font-medium">
         <button
-          className={`text-${isActive ? 'red-700 mx-2' : 'bg-green-600 text-green-600'} hover:text-indigo-900`}
+          className={`text-${isActive ? 'bg-red-700 text-red-700 mx-2' : 'bg-green-600 text-green-600'} `}
           onClick={handleBlock}
         >
           {isActive ? 'Block' : 'Unblock'}

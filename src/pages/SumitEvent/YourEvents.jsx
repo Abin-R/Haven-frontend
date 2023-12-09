@@ -1,29 +1,59 @@
 import NavbarAdmin from "../../components/Navbar";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+
 import axiosInstance from "../../Store/Axios";
+import DotLoader from "react-spinners/ClipLoader";
 
 function YourEvent() {
   const [userEvents, setUserEvents] = useState([]);
+  // eslint-disable-next-line no-unused-vars
+  let [loading, setLoading] = useState(true);
+  const [userpost, setUserPost] = useState([]);
 
   useEffect(() => {
     const fetchUserEvents = async () => {
       try {
-        const token = localStorage.getItem('access_token');
+        const token = localStorage.getItem("access_token");
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         };
-        const response = await axiosInstance.get('http://127.0.0.1:8000/event/user-events/', config);
-        console.log(response.data)
-        setUserEvents(response.data);
+        const response = await axiosInstance.get(
+          "http://127.0.0.1:8000/post/user-posts/",
+          config
+        );
+        console.log("posts", response.data);
+        setUserPost(response.data);
       } catch (error) {
-        console.error('Error fetching user events:', error);
+        console.error("Error fetching user events:", error);
       }
     };
 
-    
+    fetchUserEvents();
+  }, []);
+
+  useEffect(() => {
+    const fetchUserEvents = async () => {
+      try {
+        const token = localStorage.getItem("access_token");
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        const response = await axiosInstance.get(
+          "http://127.0.0.1:8000/event/user-events/",
+          config
+        );
+        console.log(response.data);
+        setUserEvents(response.data);
+      } catch (error) {
+        console.error("Error fetching user events:", error);
+      }
+    };
+
     fetchUserEvents();
   }, []);
   const isEventEnded = (endDate) => {
@@ -33,14 +63,12 @@ function YourEvent() {
     return eventEndDate < currentUTCDate;
   };
 
-
   return (
     <div>
       <NavbarAdmin />
       <div className="mt-28 flex justify-between">
         <div className="ml-10 mt-2 font-extrabold text-3xl">My Events</div>
         <div className="flex items-end">
-          
           <Link to="/create-events">
             <button className="focus:outline-none mr-6 justify-end text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-bold text-base rounded-lg px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 flex flex-row">
               <img
@@ -54,40 +82,62 @@ function YourEvent() {
           </Link>
         </div>
       </div>
-      <div className="m-10 mx-32 max-w-screen-lg">
-        {userEvents.map((event) => (
-          
-          <div key={event.id} className="overflow-hidden rounded-xl border shadow-lg md:pl-8 mb-6">
-            <div className="flex flex-col h-80 bg-white sm:flex-row md:h-80" style={{ height: "250px" }}>
-              <div className="flex w-full flex-col sm:w-1/2 sm:p-3 mt-2 lg:w-3/5">
-                <h2 className="text-xl mt-5 font-bold text-gray-900 md:text-2xl lg:text-3xl">{event.title}</h2>
-                <p className="mt-6 text-lg">{event.location}</p>
-               
-                <div className="flex flex-row mt-5">
-                {event.is_in_event_posting ? null : (
-                    isEventEnded(event.end_date) ? (
-                      <Link
-                        to={`/create-post/${event.id}`}
-                        className="group flex w-44 cursor-pointer select-none items-center justify-center rounded-md bg-black px-6 py-2 text-white transition"
-                      >
-                        <span className="group flex w-full items-center justify-center rounded py-1 text-center font-bold">Post</span>
-                        <svg
-                          className="flex-0 group-hover:w-6 ml-4 h-6 w-0 transition-all"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth="2"
+      {userEvents[0] ? (
+        <>
+        <div className="m-10 mx-32 max-w-screen-lg">
+          {userEvents.map((event) => (
+            <div
+              key={event.id}
+              className="overflow-hidden rounded-xl border shadow-lg md:pl-8 mb-6"
+            >
+              <div
+                className="flex flex-col h-80 bg-white sm:flex-row md:h-80"
+                style={{ height: "250px" }}
+              >
+                <div className="flex w-full flex-col sm:w-1/2 sm:p-3 mt-2 lg:w-3/5">
+                  <h2 className="text-xl mt-5 font-bold text-gray-900 md:text-2xl lg:text-3xl">
+                    {event.title}
+                  </h2>
+                  <p className="mt-6 text-lg">{event.location}</p>
+      
+                  <div className="flex flex-row mt-5">
+                    {isEventEnded(event.end_date) ? (
+                      userpost.some((post) => post.event.id === event.id) ? (
+                        // Event ID is already in userpost, don't show the "Post" button
+                        null
+                      ) : (
+                        // Event ID is not in userpost, show the "Post" button
+                        <Link
+                          to={`/create-post/${event.id}`}
+                          className="group flex w-44 cursor-pointer select-none items-center justify-center rounded-md bg-black px-6 py-2 text-white transition"
                         >
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                      </Link>
+                          <span className="group flex w-full items-center justify-center rounded py-1 text-center font-bold">
+                            Post
+                          </span>
+                          <svg
+                            className="flex-0 group-hover:w-6 ml-4 h-6 w-0 transition-all"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M14 5l7 7m0 0l-7 7m7-7H3"
+                            />
+                          </svg>
+                        </Link>
+                      )
                     ) : (
                       <Link
                         to={`/manage-event/${event.id}`}
                         className="group flex w-44 cursor-pointer select-none items-center justify-center rounded-md bg-black px-6 py-2 text-white transition"
                       >
-                        <span className="group flex w-full items-center justify-center rounded py-1 text-center font-bold">Manage</span>
+                        <span className="group flex w-full items-center justify-center rounded py-1 text-center font-bold">
+                          Manage
+                        </span>
                         <svg
                           className="flex-0 group-hover:w-6 ml-4 h-6 w-0 transition-all"
                           xmlns="http://www.w3.org/2000/svg"
@@ -96,26 +146,85 @@ function YourEvent() {
                           stroke="currentColor"
                           strokeWidth="2"
                         >
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"
+                          />
                         </svg>
                       </Link>
-                    )
-                  )}
-                  <Link to={`/attendees-event/${event.id}`} className="group ml-6 flex w-44 cursor-pointer select-none items-center justify-center rounded-md bg-black px-6 py-2 text-white transition">
-                    <span className="group flex w-full  items-center justify-center rounded py-1 text-center font-bold">Attendees</span>
-                    <svg className="flex-0 group-hover:w-6 ml-4 h-6 w-0 transition-all" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </Link>
+                    )}
+                    <Link
+                      to={`/attendees-event/${event.id}`}
+                      className="group ml-6 flex w-44 cursor-pointer select-none items-center justify-center rounded-md bg-black px-6 py-2 text-white transition"
+                    >
+                      <span className="group flex w-full  items-center justify-center rounded py-1 text-center font-bold">
+                        Attendees
+                      </span>
+                      <svg
+                        className="flex-0 group-hover:w-6 ml-4 h-6 w-0 transition-all"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M14 5l7 7m0 0l-7 7m7-7H3"
+                        />
+                      </svg>
+                    </Link>
+                  </div>
+                </div>
+                <div className="order-first ml-auto h-48 w-full bg-gray-700 sm:order-none sm:h-auto sm:w-1/2 lg:w-2/5">
+                  <img
+                    className="h-full w-full object-cover"
+                    src={event.image}
+                    alt={event.title}
+                    loading="lazy"
+                  />
                 </div>
               </div>
-              <div className="order-first ml-auto h-48 w-full bg-gray-700 sm:order-none sm:h-auto sm:w-1/2 lg:w-2/5">
-                <img className="h-full w-full object-cover" src={event.image} alt={event.title} loading="lazy" />
-              </div>
+            </div>
+          ))}
+        </div>
+      </>
+      
+      ) : (
+        <div className="flex mt-20  flex-col h-screen">
+          <div className="mb-0">
+            {/* Add an attractive illustration or image */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "30vh",
+              }}
+            >
+              <DotLoader
+                color={"black"}
+                loading={loading}
+                // cssOverride={override}
+                size={70}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
             </div>
           </div>
-        ))}
-      </div>
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">
+              Oops! No items found.
+            </h2>
+            <p className="text-gray-500">
+              It seems there are no items available at the moment.
+            </p>
+            {/* You can add additional content or links here */}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
