@@ -311,7 +311,7 @@ export default function NavbarAdmin() {
                         {image ? (
                           <img
                             className="h-8 w-8 rounded-full"
-                            src={`http://127.0.0.1:8000${image}`}
+                            src={`https://haven.abinr.xyz${image}`}
                             alt=""
                           />
                         ) : (
