@@ -1,6 +1,7 @@
-import { baseUrl } from "./BaseUrl";
+// import { baseUrl } from "./BaseUrl";
 import axios from "axios";
 // axios.defaults.baseURL = 'http://localhost:8000/api/';
+const baseURL = 'https://haven.abinr.xyz/api';
 
 let refresh = false;
 
@@ -9,7 +10,7 @@ axios.interceptors.response.use(resp => resp, async error => {
         refresh = true;
 
         console.log(localStorage.getItem('refreshToken'))
-        const response = await axios.post(`${baseUrl}/token/refresh/`, {
+        const response = await axios.post(`${baseURL}/token/refresh/`, {
             refresh:localStorage.getItem('refreshToken')
         }, {
             headers: {
