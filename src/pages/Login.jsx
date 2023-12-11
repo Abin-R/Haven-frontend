@@ -34,7 +34,7 @@ function Login() {
       return;
     }
     try {
-      const response = await axios.post("http://haven.abinr.xyz/api/token/", {
+      const response = await axios.post("https://haven.abinr.xyz/api/token/", {
         username: Name,
         password: password,
       });
