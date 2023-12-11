@@ -11,7 +11,7 @@ function EventBooking() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/admins/event-boooking/"
+          "https://haven.abinr.xyz/admins/event-boooking/"
         );
         const data = response.data;
         console.log("API Response:", data); // Add this line
