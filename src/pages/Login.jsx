@@ -165,7 +165,7 @@ function Login() {
                     }}
                     text="continue_with"
                     theme="outline"
-                    width="100%"
+                    width="250px"
                     onSuccess={async (credentialResponse) => {
                       const decoded = jwtDecode(credentialResponse.credential);
                       console.log(decoded);
