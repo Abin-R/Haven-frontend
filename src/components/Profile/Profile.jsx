@@ -124,7 +124,7 @@ function Profiles() {
                     className="h-32 w-32 rounded-full border-4 border-white dark:border-gray-500 mx-auto my-4 cursor-pointer"
                     src={
                       profileData.image
-                        ? `https://haven.abinr.xyz${profileData.image}`
+                        ? `https://haven.abinr.xyz/${profileData.image}`
                         : "https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D"
                     }
                     alt=""
