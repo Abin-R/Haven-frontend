@@ -50,6 +50,7 @@
     "slick-carousel": "^1.8.1",
     "tw-elements": "^1.0.0",
     "tw-elements-react": "^1.0.0-alpha2",
+    "vercel": "^32.6.1",
     "websocket": "^1.0.34"
   },
   "devDependencies": {
