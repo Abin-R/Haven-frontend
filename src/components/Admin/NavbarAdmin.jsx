@@ -40,7 +40,7 @@ export default function NavbarAdmin() {
       console.log("Token being sent in the request:", refreshToken);
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/logout/",
+        "https://haven.abinr.xyz/api/logout/",
         { refresh_token: localStorage.getItem("refresh_token") },
         { headers: { "Content-Type": "application/json" } }
       );

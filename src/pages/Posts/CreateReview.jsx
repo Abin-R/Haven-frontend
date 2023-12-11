@@ -52,7 +52,7 @@ function CreateReview() {
       console.log("FormData to Send:", formDataToSend);
 
       await axiosInstance.post(
-        "http://127.0.0.1:8000/post/create-event-review/",
+        "https://haven.abinr.xyz/post/create-event-review/",
         formDataToSend,
         {
           headers: {

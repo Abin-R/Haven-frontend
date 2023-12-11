@@ -16,7 +16,7 @@ const EditProfileModal = ({ onClose,  initialData }) => {
     try {
       const token = localStorage.getItem('access_token');
       const response = await axiosInstance.put(
-        'http://127.0.0.1:8000/api/profile-update',
+        'https://haven.abinr.xyz/api/profile-update',
         { ...formData, username }, // Include username in formData
         {
           headers: {

@@ -78,7 +78,7 @@ function Admin() {
                           <div className="flex-shrink-0 h-10 w-10">
                             <img
                               className="h-10 w-10 rounded-full"
-                              src={`http://127.0.0.1:8000${user.image}`}
+                              src={`https://haven.abinr.xyz${user.image}`}
                             />
                           </div>
                           <div className="ml-4">

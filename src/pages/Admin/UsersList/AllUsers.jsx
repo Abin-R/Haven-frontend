@@ -39,7 +39,7 @@ function AllUsers() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/admins/users/");
+        const response = await axios.get("https://haven.abinr.xyz/admins/users/");
         if (response.status === 200) {
           console.log(response.data.userlist);
           setUsers(response.data.userlist);
@@ -102,7 +102,7 @@ function AllUsers() {
                           <div className="flex-shrink-0 h-10 w-10">
                             <img
                               className="h-10 w-10 rounded-full"
-                              src={`http://127.0.0.1:8000${user.image}`}
+                              src={`https://haven.abinr.xyz${user.image}`}
                               alt=""
                             />
                           </div>

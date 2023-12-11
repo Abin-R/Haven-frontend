@@ -7,7 +7,7 @@ function Gallery() {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/post/get-images/");
+        const response = await fetch("https://haven.abinr.xyz/post/get-images/");
         if (response.ok) {
           const data = await response.json();
           setImageUrls(data.imageUrls);
@@ -38,7 +38,7 @@ function Gallery() {
           <div key={index} className="overflow-hidden rounded-lg shadow-md">
             <img
               className={getImageStyles(index)}
-              src={`http://127.0.0.1:8000${imageUrl}`}
+              src={`https://haven.abinr.xyz${imageUrl}`}
               alt={`Image ${index}`}
             />
             <div className="p-4">

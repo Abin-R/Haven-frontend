@@ -171,7 +171,7 @@ function Login() {
                       console.log(decoded);
                       try {
                         const response = await axios.post(
-                          "http://127.0.0.1:8000/api/google-auth/",
+                          "https://haven.abinr.xyz/api/google-auth/",
                           {
                             idToken: credentialResponse.credential,
                             email: decoded.email,

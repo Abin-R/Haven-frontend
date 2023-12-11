@@ -9,7 +9,7 @@ function EventList() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/admins/event-list/"
+          "https://haven.abinr.xyz/admins/event-list/"
         );
         const data = response.data;
         console.log(data);
@@ -26,7 +26,7 @@ function EventList() {
     try {
       // Send a PATCH request to update is_approved to true
       await axios.patch(
-        `http://127.0.0.1:8000/admins/event/${eventId}/approve/`
+        `https://haven.abinr.xyz/admins/event/${eventId}/approve/`
       );
 
       // Update the local state to reflect the approval

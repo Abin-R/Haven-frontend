@@ -61,7 +61,7 @@ function SingleEvent() {
     const fetchEventDetails = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/event/events/${eventId}`
+          `https://haven.abinr.xyz/event/events/${eventId}`
         );
         setEvent(response.data);
       } catch (error) {
@@ -79,7 +79,7 @@ function SingleEvent() {
         <div>
           <img
             className="w-full h-64 sm:h-32 xl:h-96 mt-20"
-            src={`http://127.0.0.1:8000${event.image}`}
+            src={`https://haven.abinr.xyz${event.image}`}
             alt="Event"
           />
         </div>

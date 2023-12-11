@@ -16,7 +16,7 @@ function Event() {
     // Function to fetch events from the backend
     const fetchEvents = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/event/events/");
+        const response = await axios.get("https://haven.abinr.xyz/event/events/");
         console.log(response.data);
         setEvents(response.data);
       } catch (error) {
@@ -116,7 +116,7 @@ function Event() {
           {/* Use Link to navigate to the individual event page */}
           <img
             className="w-full h-80"
-            src={`http://127.0.0.1:8000${event.image}`}
+            src={`https://haven.abinr.xyz${event.image}`}
             alt="Event"
           />
         </Link>

@@ -65,7 +65,7 @@ function YourEvents() {
 
       console.log(formDataToSend);
       await axiosInstance.post(
-        "http://127.0.0.1:8000/event/create-event/",
+        "https://haven.abinr.xyz/event/create-event/",
         formDataToSend,
         {
           headers: {

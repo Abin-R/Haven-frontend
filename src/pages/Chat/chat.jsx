@@ -13,7 +13,7 @@ const ChatComponent = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/admins/users/");
+        const response = await axios.get("https://haven.abinr.xyz/admins/users/");
         if (response.status === 200) {
           setUsers(response.data.userlist);
           console.log(response.data.userlist);
@@ -39,7 +39,7 @@ const ChatComponent = () => {
 
     try {
       // Make a POST request to save the message in the backend
-      const response = await fetch("http://127.0.0.1:8000/chat/save-message/", {
+      const response = await fetch("https://haven.abinr.xyz/chat/save-message/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

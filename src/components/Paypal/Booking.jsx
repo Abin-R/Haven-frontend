@@ -46,7 +46,7 @@ const Booking = ({ event, prices,ticket }) => {
         };
       // Change this part of your frontend code
 return axiosInstance.post(
-    "http://127.0.0.1:8000/event/bookings/",
+    "https://haven.abinr.xyz/event/bookings/",
     {
       username: username,
       event: event,     // Change to match the key used in the backend

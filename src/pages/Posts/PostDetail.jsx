@@ -29,7 +29,7 @@ function PostDetail() {
     const fetchPostDetails = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/post/posts/${postId}`
+          `https://haven.abinr.xyz/post/posts/${postId}`
         );
         console.log(response.data);
         setPost(response.data.post);

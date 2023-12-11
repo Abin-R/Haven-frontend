@@ -72,7 +72,7 @@ const Dashboard = () => {
   useEffect(() => {
     // Fetch total revenue from the backend using Axios
     axios
-      .get("http://127.0.0.1:8000/admins/admin-dashboard")
+      .get("https://haven.abinr.xyz/admins/admin-dashboard")
       .then((response) => {
         console.log(response.data);
         setTotalRevenue(response.data);

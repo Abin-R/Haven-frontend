@@ -12,7 +12,7 @@ function Attendees() {
     const fetchAttendees = async () => {
       try {
         const response = await axiosInstance.get(
-          `http://127.0.0.1:8000/event/attendees/${eventId}/`
+          `https://haven.abinr.xyz/event/attendees/${eventId}/`
         );
         console.log(response.data);
         setAttendees(response.data);

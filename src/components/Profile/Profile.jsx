@@ -63,7 +63,7 @@ function Profiles() {
 
         // Send the image to the backend using axios or your preferred HTTP library
         const response = await axiosInstance.post(
-          "http://127.0.0.1:8000/api/upload-profile-image/",
+          "https://haven.abinr.xyz/api/upload-profile-image/",
           formData,
           {
             headers: {

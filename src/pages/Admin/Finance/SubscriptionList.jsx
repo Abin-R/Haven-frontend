@@ -39,7 +39,7 @@ function SubscriptionList() {
     try {
       // Send a POST request to the backend for subscription renewal
       const response = await axios.post(
-        `http://127.0.0.1:8000/admins/renew-subscription/${subscriptionId}/`
+        `https://haven.abinr.xyz/admins/renew-subscription/${subscriptionId}/`
       );
 
       // Check if the response status is 406

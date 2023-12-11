@@ -6,8 +6,8 @@ function BlockButton({ userId, isActive }) {
     try {
       // Determine the endpoint based on the user's current status
       const endpoint = isActive
-        ? `http://127.0.0.1:8000/admins/block-user/${userId}/`
-        : `http://127.0.0.1:8000/admins/unblock-user/${userId}/`;
+        ? `https://haven.abinr.xyz/admins/block-user/${userId}/`
+        : `https://haven.abinr.xyz/admins/unblock-user/${userId}/`;
 
       // Make a POST request to the appropriate backend endpoint using Axios
       const response = await axios.post(endpoint, {

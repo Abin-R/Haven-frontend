@@ -11,7 +11,7 @@ function Posts() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/post/posts/');
+        const response = await axios.get('https://haven.abinr.xyz/post/posts/');
         console.log(response.data);
         setPosts(response.data);
       } catch (error) {

@@ -24,7 +24,7 @@ function ForgotPassword() {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/forgot-password/",
+        "https://haven.abinr.xyz/api/forgot-password/",
         { email }
       );
       console.log(response.data);

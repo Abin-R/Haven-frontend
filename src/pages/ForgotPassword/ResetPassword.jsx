@@ -29,7 +29,7 @@ function ResetPassword() {
     try {
       // Perform the POST request to the backend
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/reset-password/",
+        "https://haven.abinr.xyz/api/reset-password/",
         {
           password,
           uidb64 // Replace with your uidb64 value

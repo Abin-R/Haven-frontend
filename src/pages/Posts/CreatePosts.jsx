@@ -52,7 +52,7 @@ function CreatePosts() {
 
       console.log(formDataToSend);
       await axiosInstance.post(
-        `http://127.0.0.1:8000/post/create-post/${eventId}/`,
+        `https://haven.abinr.xyz/post/create-post/${eventId}/`,
         formDataToSend,
         {
           headers: {

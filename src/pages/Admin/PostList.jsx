@@ -57,7 +57,7 @@ function PostList() {
                       
                       <td className="px-6 py-4  flex whitespace-nowrap text-sm font-medium text-gray-900">
                       <img
-                          src={`http://127.0.0.1:8000${post.image}`}
+                          src={`https://haven.abinr.xyz${post.image}`}
                           className="w-10 h-10 rounded-lg"
                           alt="Post Image"
                         />

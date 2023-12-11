@@ -16,7 +16,7 @@ function Checkout() {
       try {
         // Replace 'your-backend-endpoint' with the actual endpoint for fetching event details
         const response = await fetch(
-          `http://127.0.0.1:8000/event/events/${eventId}`
+          `https://haven.abinr.xyz/event/events/${eventId}`
         );
         const data = await response.json();
         console.log(data);

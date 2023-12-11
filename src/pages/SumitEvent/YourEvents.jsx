@@ -21,7 +21,7 @@ function YourEvent() {
           },
         };
         const response = await axiosInstance.get(
-          "http://127.0.0.1:8000/post/user-posts/",
+          "https://haven.abinr.xyz/post/user-posts/",
           config
         );
         console.log("posts", response.data);
@@ -44,7 +44,7 @@ function YourEvent() {
           },
         };
         const response = await axiosInstance.get(
-          "http://127.0.0.1:8000/event/user-events/",
+          "https://haven.abinr.xyz/event/user-events/",
           config
         );
         console.log(response.data);

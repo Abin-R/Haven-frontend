@@ -15,7 +15,7 @@ function YourPosts() {
           },
         };
         const response = await axiosInstance.get(
-          "http://127.0.0.1:8000/post/user-posts/",
+          "https://haven.abinr.xyz/post/user-posts/",
           config
         );
         setUserEvents(response.data);

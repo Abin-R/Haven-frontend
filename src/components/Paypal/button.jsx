@@ -35,7 +35,7 @@ const PaypalButton = ({ subscriptionType, price }) => {
   const onApprove = (data, actions) => {
     return actions.order.capture().then(function (details) {
       return axios.post(
-        "http://127.0.0.1:8000/subscription/save-subscription/",
+        "https://haven.abinr.xyz/subscription/save-subscription/",
         {
           username: username, // Replace with the actual username
           subscriptionType: subscriptionType,

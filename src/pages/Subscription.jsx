@@ -17,7 +17,7 @@ function Subscription() {
     async function fetchSubscriptions() {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/subscription/subscriptions"
+          "https://haven.abinr.xyz/subscription/subscriptions"
         ); // Replace this URL with your Django endpoint
         setSubscriptions(response.data);
         

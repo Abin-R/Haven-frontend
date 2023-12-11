@@ -28,7 +28,7 @@ function EventBooking() {
     try {
       // Send a PATCH request to update booking_status to 'CONFIRMED'
       await axios.patch(
-        `http://127.0.0.1:8000/admins/approve-booking/${bookingId}/`
+        `https://haven.abinr.xyz/admins/approve-booking/${bookingId}/`
       );
   
       // Update the local state to reflect the approval
