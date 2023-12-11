@@ -91,8 +91,8 @@ function Invoice() {
               className="max-w-[100rem] px-4 sm:px-6 lg:px-8 mx-auto my-4 sm:my-3"
             >
               <div className="sm:w-11/12 lg:w-3/4 mx-auto">
-                <div class="flex flex-col p-4 sm:p-10 bg-stone-100 shadow-md rounded-xl ">
-                  <div class="flex justify-between">
+                <div className="flex flex-col p-4 sm:p-10 bg-stone-100 shadow-md rounded-xl ">
+                  <div className="flex justify-between">
                     <Link to="/">
                       <img
                         className="h-8 w-auto mx-8 my-10"
@@ -101,11 +101,11 @@ function Invoice() {
                       />
                     </Link>
 
-                    <div class="text-end">
-                      <h2 class="text-2xl md:text-3xl font-semibold text-gray-900 ">
+                    <div className="text-end">
+                      <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 ">
                         Invoice #
                       </h2>
-                      <span class="mt-1 block text-gray-500">3682303</span>
+                      <span className="mt-1 block text-gray-500">3682303</span>
 
                       <address className="mt-4 not-italic text-gray-800 ">
                         45 Roker Terrace
@@ -120,12 +120,12 @@ function Invoice() {
                     </div>
                   </div>
 
-                  <div class="mt-8 grid sm:grid-cols-2 gap-3">
+                  <div className="mt-8 grid sm:grid-cols-2 gap-3">
                     <div>
-                      <h3 class="text-lg font-semibold text-gray-800 ">
+                      <h3 className="text-lg font-semibold text-gray-800 ">
                         Bill to:
                       </h3>
-                      <h3 class="text-lg font-semibold text-gray-800 ">
+                      <h3 className="text-lg font-semibold text-gray-800 ">
                         {paymentData.user.username}
                       </h3>
                       <address className="mt-4 not-italic text-gray-800 ">
@@ -141,23 +141,23 @@ function Invoice() {
                       </address>
                     </div>
 
-                    <div class="sm:text-end space-y-2">
-                      <div class="grid grid-cols-2 sm:grid-cols-1 gap-3 sm:gap-2">
-                        <dl class="grid sm:grid-cols-5 gap-x-3">
-                          <dt class="col-span-3 font-semibold text-gray-800 ">
+                    <div className="sm:text-end space-y-2">
+                      <div className="grid grid-cols-2 sm:grid-cols-1 gap-3 sm:gap-2">
+                        <dl className="grid sm:grid-cols-5 gap-x-3">
+                          <dt className="col-span-3 font-semibold text-gray-800 ">
                             Invoice date:
                           </dt>
-                          <dd class="col-span-2 text-gray-500">
+                          <dd className="col-span-2 text-gray-500">
                             {new Date(
                               transaction.transaction_date
                             ).toLocaleDateString()}
                           </dd>
                         </dl>
-                        <dl class="grid sm:grid-cols-5 gap-x-3">
-                          <dt class="col-span-3 font-semibold text-gray-800 ">
+                        <dl className="grid sm:grid-cols-5 gap-x-3">
+                          <dt className="col-span-3 font-semibold text-gray-800 ">
                             Due date:
                           </dt>
-                          <dd class="col-span-2 text-gray-500">
+                          <dd className="col-span-2 text-gray-500">
                             {new Date(
                               transaction.transaction_date
                             ).toLocaleDateString()}
@@ -167,67 +167,67 @@ function Invoice() {
                     </div>
                   </div>
 
-                  <div class="mt-6">
-                    <div class="border border-gray-200 p-4 rounded-lg space-y-4 dark:border-gray-700">
-                      <div class="hidden sm:grid sm:grid-cols-5">
-                        <div class="sm:col-span-2 text-xs font-medium text-gray-500 uppercase">
+                  <div className="mt-6">
+                    <div className="border border-gray-200 p-4 rounded-lg space-y-4 dark:border-gray-700">
+                      <div className="hidden sm:grid sm:grid-cols-5">
+                        <div className="sm:col-span-2 text-xs font-medium text-gray-500 uppercase">
                           Item
                         </div>
-                        <div class="text-start text-xs font-medium text-gray-500 uppercase">
+                        <div className="text-start text-xs font-medium text-gray-500 uppercase">
                           Qty
                         </div>
-                        <div class="text-start text-xs font-medium text-gray-500 uppercase">
+                        <div className="text-start text-xs font-medium text-gray-500 uppercase">
                           Rate
                         </div>
-                        <div class="text-end text-xs font-medium text-gray-500 uppercase">
+                        <div className="text-end text-xs font-medium text-gray-500 uppercase">
                           Amount
                         </div>
                       </div>
 
-                      <div class="hidden sm:block border-b border-gray-200 dark:border-gray-700"></div>
+                      <div className="hidden sm:block border-b border-gray-200 dark:border-gray-700"></div>
 
-                      <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">
-                        <div class="col-span-full sm:col-span-2">
-                          <p class="font-medium text-gray-800">
+                      <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+                        <div className="col-span-full sm:col-span-2">
+                          <p className="font-medium text-gray-800">
                             {transaction.event.title}
                           </p>
                         </div>
                         <div>
-                          <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase">
+                          <h5 className="sm:hidden text-xs font-medium text-gray-500 uppercase">
                             Qty
                           </h5>
-                          <p class="text-gray-800 ">
+                          <p className="text-gray-800 ">
                             {paymentData.ticket_count}
                           </p>
                         </div>
                         <div>
-                          <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase">
+                          <h5 className="sm:hidden text-xs font-medium text-gray-500 uppercase">
                             Rate
                           </h5>
-                          <p class="text-gray-800 ">{transaction.event.cost}</p>
+                          <p className="text-gray-800 ">{transaction.event.cost}</p>
                         </div>
                         <div>
-                          <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase">
+                          <h5 className="sm:hidden text-xs font-medium text-gray-500 uppercase">
                             Amount
                           </h5>
-                          <p class="sm:text-end text-gray-800 ">
+                          <p className="sm:text-end text-gray-800 ">
                             ${transaction.amount}
                           </p>
                         </div>
                       </div>
 
-                      <div class="sm:hidden border-b border-gray-200 dark:border-gray-700"></div>
+                      <div className="sm:hidden border-b border-gray-200 dark:border-gray-700"></div>
                     </div>
                   </div>
 
-                  <div class="mt-8 flex sm:justify-end">
-                    <div class="w-full max-w-2xl sm:text-end space-y-2">
-                      <div class="grid grid-cols-2 sm:grid-cols-1 gap-3 sm:gap-2">
-                        <dl class="grid sm:grid-cols-5 gap-x-3">
-                          <dt class="col-span-3 font-semibold text-gray-800 ">
+                  <div className="mt-8 flex sm:justify-end">
+                    <div className="w-full max-w-2xl sm:text-end space-y-2">
+                      <div className="grid grid-cols-2 sm:grid-cols-1 gap-3 sm:gap-2">
+                        <dl className="grid sm:grid-cols-5 gap-x-3">
+                          <dt className="col-span-3 font-semibold text-gray-800 ">
                             Total:
                           </dt>
-                          <dd class="col-span-2 text-gray-500 mr-6">
+                          <dd className="col-span-2 text-gray-500 mr-6">
                             {" "}
                             ${transaction.amount}
                           </dd>
@@ -257,25 +257,25 @@ function Invoice() {
                     </div>
                   </div>
 
-                  <div class="mt-8 sm:mt-12">
-                    <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                  <div className="mt-8 sm:mt-12">
+                    <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
                       Thank you!
                     </h4>
-                    <p class="text-gray-500">
+                    <p className="text-gray-500">
                       If you have any questions concerning this invoice, use the
                       following contact information:
                     </p>
-                    <div class="mt-2">
-                      <p class="block text-sm font-medium text-gray-800 ">
+                    <div className="mt-2">
+                      <p className="block text-sm font-medium text-gray-800 ">
                         example@site.com
                       </p>
-                      <p class="block text-sm font-medium text-gray-800">
+                      <p className="block text-sm font-medium text-gray-800">
                         +1 (062) 109-9222
                       </p>
                     </div>
                   </div>
 
-                  <p class="mt-5 text-sm text-gray-500">© 2022 Preline.</p>
+                  <p className="mt-5 text-sm text-gray-500">© 2022 Preline.</p>
                 </div>
               </div>
             </div>

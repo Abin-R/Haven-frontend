@@ -38,7 +38,7 @@ function Register() {
       formData.append("password", password);
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/register/",
+        "http://haven.abinr.xyz/api/register/",
         formData,
         {
           headers: {
