@@ -86,7 +86,7 @@ function Profiles() {
     const fetchProfileData = async () => {
       try {
         const response = await axiosInstance.get(
-          "http://127.0.0.1:8000/api/profiles/",
+          "https://haven.abinr.xyz/api/profiles/",
           {
             params: {
               username: username,
