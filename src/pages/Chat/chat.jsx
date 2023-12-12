@@ -64,7 +64,7 @@ const ChatComponent = () => {
     const fetchMessages = async () => {
       try {
         const response = await fetch(
-          "http://127.0.0.1:8000/chat/get-messages/"
+          "https://haven.abinr.xyz/chat/get-messages/"
         );
         if (response.ok) {
           const data = await response.json();
@@ -105,7 +105,7 @@ const ChatComponent = () => {
             <div className="flex flex-col items-center bg-indigo-100 border border-gray-200 mt-4 w-full py-6 px-4 rounded-lg">
               <div className="h-20 w-20 rounded-full border overflow-hidden">
                 <img
-                  src={`http://127.0.0.1:8000${image}`}
+                  src={`https://haven.abinr.xyz${image}`}
                   alt="Avatar"
                   className="h-full w-full"
                 />
@@ -172,7 +172,7 @@ const ChatComponent = () => {
                               <div className="flex flex-col">
                                 <div className="flex items-center font-bold text-xs justify-center  flex-shrink-0">
                                   <img
-                                    src={`http://127.0.0.1:8000${image}`} // Update this line
+                                    src={`https://haven.abinr.xyz${image}`} // Update this line
                                     alt="User Profile"
                                     className="h-12 w-12 rounded-full flex-shrink-0"
                                   />
@@ -193,7 +193,7 @@ const ChatComponent = () => {
                               <div>
                                 <div className="flex flex-col items-center font-bold text-xs flex-shrink-0">
                                   <img
-                                    src={`http://127.0.0.1:8000${senderUser.image}`} // Update this line
+                                    src={`https://haven.abinr.xyz${senderUser.image}`} // Update this line
                                     alt="User Profile"
                                     className="h-12 w-12 rounded-full flex-shrink-0"
                                   />
