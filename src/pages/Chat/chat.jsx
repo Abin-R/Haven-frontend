@@ -7,7 +7,7 @@ const ChatComponent = () => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const { username, image } = useSelector((state) => state.user);
-  const socket = new WebSocket('wss://haven.abinr.xyz/wss/chat/general/');
+  const socket = new WebSocket('wss://haven.abinr.xyz/ws/chat/general/');
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
