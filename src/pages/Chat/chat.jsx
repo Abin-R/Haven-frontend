@@ -7,7 +7,7 @@ const ChatComponent = () => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const { username, image } = useSelector((state) => state.user);
-  const socket = new WebSocket('wss://haven.abinr.xyz/ws/chat/general/');
+  const socket = new WebSocket('ws://haven.abinr.xyz/ws/chat/general/');
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -78,30 +78,31 @@ const ChatComponent = () => {
     fetchMessages();
   
     // WebSocket connection
-    const socket = new WebSocket('wss://haven.abinr.xyz/ws/chat/general/');
+    const socket = new WebSocket('ws://haven.abinr.xyz/ws/chat/general/');
   socket.onopen = () => {
     console.log("WebSocket connected");
   };
 
   socket.onmessage = (event) => {
     const data = JSON.parse(event.data);
+    console.log(data)
     setMessages((prevMessages) => [...prevMessages, data]);
   };
 
-  socket.onclose = () => {
-    console.log("WebSocket closed");
-  };
+  // socket.onclose = () => {
+  //   console.log("WebSocket closed");
+  // };
 
   // Error handling
   socket.onerror = (error) => {
     console.error("WebSocket error:", error);
   };
 
-  // Cleanup function
-  return () => {
-    console.log("Cleaning up WebSocket connection");
-    socket.close();
-  };
+  // // Cleanup function
+  // return () => {
+  //   console.log("Cleaning up WebSocket connection");
+  //   socket.close();
+  // };
   }, []); // Empty dependency array means this effect runs once when the component mounts
   
 
