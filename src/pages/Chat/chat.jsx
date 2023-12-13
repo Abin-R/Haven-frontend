@@ -7,7 +7,7 @@ const ChatComponent = () => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const { username, image } = useSelector((state) => state.user);
-  const socket = new WebSocket('wss://haven.abinr.xyz/ws/chat/general/');
+  // const socket = new WebSocket('wss://haven.abinr.xyz/ws/chat/general/');
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -63,12 +63,9 @@ const ChatComponent = () => {
     // Fetch chat messages from the backend when the component mounts
     const fetchMessages = async () => {
       try {
-        const response = await fetch(
-          "https://haven.abinr.xyz/chat/get-messages/"
-        );
+        const response = await fetch("https://haven.abinr.xyz/chat/get-messages/");
         if (response.ok) {
           const data = await response.json();
-
           setMessages(data);
         } else {
           console.error("Failed to fetch messages from the backend");
@@ -77,22 +74,31 @@ const ChatComponent = () => {
         console.error("Error while fetching messages:", error);
       }
     };
-
+  
     fetchMessages();
-
+  
+    // WebSocket connection
+    const socket = new WebSocket('wss://haven.abinr.xyz/ws/chat/general/');
     socket.onopen = () => {
       console.log("WebSocket connected");
     };
-
+  
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
       setMessages((prevMessages) => [...prevMessages, data]);
     };
-
+  
     socket.onclose = () => {
       console.log("WebSocket closed");
     };
-  }, []);
+  
+    // Cleanup function
+    return () => {
+      console.log("Cleaning up WebSocket connection");
+      socket.close();
+    };
+  }, []); // Empty dependency array means this effect runs once when the component mounts
+  
 
   
 
