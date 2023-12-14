@@ -17,6 +17,7 @@ const ChatComponent = () => {
         const response = await axios.get("https://haven.abinr.xyz/admins/users/");
         if (response.status === 200) {
           setUsers(response.data.userlist);
+          setCurrentTime((prevValue) => !prevValue)
           console.log(response.data.userlist);
         }
       } catch (error) {
@@ -49,6 +50,7 @@ const ChatComponent = () => {
       });
 
       if (!response.ok) {
+        setCurrentTime((prevValue) => !prevValue)
         console.error("Failed to save message in the backend");
       }
     } catch (error) {
