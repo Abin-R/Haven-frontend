@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect ,useCallback} from "react";
 import { useSelector } from "react-redux";
 import NavbarAdmin from "../../components/Navbar";
 import axios from "axios";
@@ -13,22 +13,22 @@ const ChatComponent = () => {
   const [isSending, setIsSending] = useState(false); 
   const [forceUpdateKey, setForceUpdateKey] = useState(0);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get("https://haven.abinr.xyz/admins/users/");
-        if (response.status === 200) {
-          setUsers(response.data.userlist);
-          setCurrentTime((prevValue) => !prevValue)
-          console.log(response.data.userlist);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
+  const fetchUsers = useCallback(async () => {
+    try {
+      const response = await axios.get("https://haven.abinr.xyz/admins/users/");
+      if (response.status === 200) {
+        setUsers(response.data.userlist);
+        setCurrentTime((prevValue) => !prevValue);
+        console.log(response.data.userlist);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  }, [setCurrentTime]);
 
+  useEffect(() => {
     fetchUsers();
-  }, [forceUpdateKey]);
+  }, [fetchUsers]);
 
   const getRandomColor = (name) => {
     const colors = ["#85bdde", "#53e3d4", "#a09480", "#198ba3", "#82a8cd"];
@@ -38,12 +38,11 @@ const ChatComponent = () => {
     return colors[index];
   };
 
-  const sendMessage = async () => {
+  const sendMessage = useCallback(async () => {
     const user = username;
     setIsSending(true);
 
     try {
-      // Make a POST request to save the message in the backend
       const response = await fetch("https://haven.abinr.xyz/chat/save-message/", {
         method: "POST",
         headers: {
@@ -51,23 +50,21 @@ const ChatComponent = () => {
         },
         body: JSON.stringify({ user, message }),
       });
-      setCurrentTime((prevValue) => !prevValue)
+      setCurrentTime((prevValue) => !prevValue);
 
       if (!response.ok) {
-        setCurrentTime((prevValue) => !prevValue)
         console.error("Failed to save message in the backend");
       }
     } catch (error) {
       console.error("Error while saving message:", error);
     }
 
-    // Send the message to the WebSocket
     socket.send(JSON.stringify({ message, user }));
-    setMessage(""); // Clear the input field after sending the message
+    setMessage("");
     setIsSending(false);
-    setCurrentTime((prevValue) => !prevValue)
+    setCurrentTime((prevValue) => !prevValue);
     setForceUpdateKey((prevKey) => prevKey + 1);
-  };
+  }, [username, message, socket, setCurrentTime, setMessage, setIsSending, setForceUpdateKey]);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -102,7 +99,7 @@ const ChatComponent = () => {
     socket.onerror = (error) => {
       console.error("WebSocket error:", error);
     };
-  }, [forceUpdateKey]);
+  }, [forceUpdateKey, setCurrentTime, setMessages]);
  // Empty dependency array means this effect runs once when the component mounts
   
 
