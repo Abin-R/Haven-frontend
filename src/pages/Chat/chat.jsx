@@ -11,6 +11,7 @@ const ChatComponent = () => {
   const [users, setUsers] = useState([]);
   const [currentTime , setCurrentTime] = useState(false)
   const [isSending, setIsSending] = useState(false); 
+  const [forceUpdateKey, setForceUpdateKey] = useState(0);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -50,6 +51,7 @@ const ChatComponent = () => {
         },
         body: JSON.stringify({ user, message }),
       });
+      setCurrentTime((prevValue) => !prevValue)
 
       if (!response.ok) {
         setCurrentTime((prevValue) => !prevValue)
@@ -63,10 +65,11 @@ const ChatComponent = () => {
     socket.send(JSON.stringify({ message, user }));
     setMessage(""); // Clear the input field after sending the message
     setIsSending(false);
+    setCurrentTime((prevValue) => !prevValue)
+    setForceUpdateKey((prevKey) => prevKey + 1);
   };
 
   useEffect(() => {
-    // Fetch chat messages from the backend when the component mounts
     const fetchMessages = async () => {
       try {
         const response = await fetch("https://haven.abinr.xyz/chat/get-messages/");
@@ -81,37 +84,26 @@ const ChatComponent = () => {
         console.error("Error while fetching messages:", error);
       }
     };
-  
+
     fetchMessages();
-  
-    // WebSocket connection
+
     const socket = new WebSocket('wss://haven.abinr.xyz/ws/chat/general/');
-  socket.onopen = () => {
-    console.log("WebSocket connected");
-  };
+    socket.onopen = () => {
+      console.log("WebSocket connected");
+    };
 
-  socket.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-    console.log(data)
-    setMessages((prevMessages) => [...prevMessages, data]);
-    setCurrentTime((prevValue) => !prevValue)
-  };
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      console.log(data);
+      setMessages((prevMessages) => [...prevMessages, data]);
+      setCurrentTime((prevValue) => !prevValue);
+    };
 
-  // socket.onclose = () => {
-  //   console.log("WebSocket closed");
-  // };
-
-  // Error handling
-  socket.onerror = (error) => {
-    console.error("WebSocket error:", error);
-  };
-
-  // // Cleanup function
-  // return () => {
-  //   console.log("Cleaning up WebSocket connection");
-  //   socket.close();
-  // };
-  }, []); // Empty dependency array means this effect runs once when the component mounts
+    socket.onerror = (error) => {
+      console.error("WebSocket error:", error);
+    };
+  }, [forceUpdateKey]);
+ // Empty dependency array means this effect runs once when the component mounts
   
 
   
