@@ -28,7 +28,7 @@ const ChatComponent = () => {
     };
 
     fetchUsers();
-  }, []);
+  }, [forceUpdateKey]);
 
   const getRandomColor = (name) => {
     const colors = ["#85bdde", "#53e3d4", "#a09480", "#198ba3", "#82a8cd"];
