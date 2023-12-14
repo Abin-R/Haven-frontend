@@ -9,6 +9,7 @@ const ChatComponent = () => {
   const { username, image } = useSelector((state) => state.user);
   const socket = new WebSocket('wss://haven.abinr.xyz/ws/chat/general/');
   const [users, setUsers] = useState([]);
+  const [currentTime , setCurrentTime] = useState(false)
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -67,6 +68,7 @@ const ChatComponent = () => {
         if (response.ok) {
           const data = await response.json();
           setMessages(data);
+          setCurrentTime((prevValue) => !prevValue);
         } else {
           console.error("Failed to fetch messages from the backend");
         }
@@ -87,6 +89,7 @@ const ChatComponent = () => {
     const data = JSON.parse(event.data);
     console.log(data)
     setMessages((prevMessages) => [...prevMessages, data]);
+    setCurrentTime((prevValue) => !prevValue)
   };
 
   // socket.onclose = () => {
