@@ -10,6 +10,7 @@ const ChatComponent = () => {
   const socket = new WebSocket('wss://haven.abinr.xyz/ws/chat/general/');
   const [users, setUsers] = useState([]);
   const [currentTime , setCurrentTime] = useState(false)
+  const [isSending, setIsSending] = useState(false); 
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -38,6 +39,7 @@ const ChatComponent = () => {
 
   const sendMessage = async () => {
     const user = username;
+    setIsSending(true);
 
     try {
       // Make a POST request to save the message in the backend
@@ -60,6 +62,7 @@ const ChatComponent = () => {
     // Send the message to the WebSocket
     socket.send(JSON.stringify({ message, user }));
     setMessage(""); // Clear the input field after sending the message
+    setIsSending(false);
   };
 
   useEffect(() => {
