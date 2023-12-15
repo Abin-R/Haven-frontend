@@ -47,16 +47,13 @@ function Home() {
               <div className="relative flex w-full max-w-[58rem] flex-row rounded-3xl rounded-s-none bg-white bg-clip-border text-gray-700 shadow-md">
                 <div className="p-6">
                   <h6 className="mb-4 block font-sans text-base font-semibold uppercase leading-relaxed tracking-normal text-pink-500 antialiased">
-                    startups
+                    Our Events
                   </h6>
                   <h4 className="mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-                    Lyft launching cross-platform service this week
+                  Haven Community launches cross-platform event service.
                   </h4>
                   <p className="mb-8 block font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
-                    Like so many organizations these days, Autodesk is a company
-                    in transition. It was until recently a traditional boxed
-                    software company selling licenses. Yet its own business
-                    model disruption is only part of the story
+                  This week marks the launch of our eagerly awaited cross-platform events! Join us as we bring together a seamless experience across various platforms, creating unforgettable moments for all participants. Don't miss out on the excitement – save the date and be part of our extraordinary events!
                   </p>
                   <a className="inline-block" href="#">
                     <button
@@ -112,16 +109,13 @@ function Home() {
                 </div>
                 <div className="p-6">
                   <h6 className="mb-4 block font-sans text-base font-semibold uppercase leading-relaxed tracking-normal text-pink-500 antialiased">
-                    startups
+                    Upcoming Events
                   </h6>
                   <h4 className="mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-                    Lyft launching cross-platform service this week
+                  Haven Community launches cross-platform event service.
                   </h4>
                   <p className="mb-8 block font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
-                    Like so many organizations these days, Autodesk is a company
-                    in transition. It was until recently a traditional boxed
-                    software company selling licenses. Yet its own business
-                    model disruption is only part of the story
+                  Our upcoming events will be launched this week, providing a cross-platform experience for our community. Stay tuned for exciting updates and join us for memorable experiences!
                   </p>
                   <a className="inline-block" href="#">
                     <button

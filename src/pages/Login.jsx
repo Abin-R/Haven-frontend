@@ -141,15 +141,15 @@ function Login() {
                 </div>
               </form>
 
-              <div className="my-4 px-4 border-b text-center">
+              {/* <div className="my-4 px-4 border-b text-center">
                 <div className="leading-none px-4 inline-block text-sm text-stone-300 tracking-wide font-medium bg-white transform translate-y-1/2">
                   Or sign in with Google
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="flex justify-center mt-8  ">
-            <button className="w-64 h-14    max-w-xs font-bold shadow-sm rounded-lg  bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
+            {/* <button className="w-64 h-14    max-w-xs font-bold shadow-sm rounded-lg  bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
               <div className="bg-white  rounded-full"></div>
               <GoogleOAuthProvider
                 className="bg-red"
@@ -228,7 +228,7 @@ function Login() {
                   />
                 </div>
               </GoogleOAuthProvider>
-            </button>
+            </button> */}
           </div>
           <div className="mt-5 text-sm font-display font-semibold text-gray-700 text-center">
             Don't have an account ?{" "}

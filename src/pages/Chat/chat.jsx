@@ -19,10 +19,10 @@ const ChatComponent = () => {
       if (response.status === 200) {
         setUsers(response.data.userlist);
         setCurrentTime((prevValue) => !prevValue);
-        console.log(response.data.userlist);
+        // console.log(response.data.userlist);
       }
     } catch (error) {
-      console.error("Error fetching user data:", error);
+      // console.error("Error fetching user data:", error);
     }
   }, [currentTime]);
 
@@ -56,7 +56,7 @@ const ChatComponent = () => {
         console.error("Failed to save message in the backend");
       }
     } catch (error) {
-      console.error("Error while saving message:", error);
+      // console.error("Error while saving message:", error);
     }
 
     socket.send(JSON.stringify({ message, user }));
@@ -75,10 +75,10 @@ const ChatComponent = () => {
           setMessages(data);
           setCurrentTime((prevValue) => !prevValue);
         } else {
-          console.error("Failed to fetch messages from the backend");
+          // console.error("Failed to fetch messages from the backend");
         }
       } catch (error) {
-        console.error("Error while fetching messages:", error);
+        // console.error("Error while fetching messages:", error);
       }
     };
 
@@ -86,7 +86,7 @@ const ChatComponent = () => {
 
     const socket = new WebSocket('wss://haven.abinr.xyz/ws/chat/general/');
     socket.onopen = () => {
-      console.log("WebSocket connected");
+      // console.log("WebSocket connected");
     };
 
     socket.onmessage = (event) => {
@@ -97,7 +97,7 @@ const ChatComponent = () => {
     };
 
     socket.onerror = (error) => {
-      console.error("WebSocket error:", error);
+      // console.error("WebSocket error:", error);
     };
   }, [forceUpdateKey, currentTime, messages ]);
  // Empty dependency array means this effect runs once when the component mounts
@@ -121,12 +121,12 @@ const ChatComponent = () => {
               </div>
               <div className="text-sm font-semibold mt-2">{username}</div>
               <div className="text-xs text-gray-500">Lead UI/UX Deddsigner</div>
-              <div className="flex flex-row items-center mt-3">
+              {/* <div className="flex flex-row items-center mt-3">
                 <div className="flex flex-col justify-center h-4 w-8 bg-indigo-500 rounded-full">
                   <div className="h-3 w-3 bg-white rounded-full self-end mr-1"></div>
                 </div>
                 <div className="leading-none ml-1 text-xs">Active</div>
-              </div>
+              </div> */}
             </div>
             <div className="flex flex-col mt-8">
               <div className="flex flex-row items-center justify-between text-xs">

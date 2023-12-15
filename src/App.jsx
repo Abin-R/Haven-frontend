@@ -35,6 +35,7 @@ import YourPosts from './pages/Posts/YourPosts';
 import Checkout from './pages/Checkout';
 import Gallery from './pages/Gallery';
 import Invoice from './components/Invoice/invoice';
+import EditEvent from './pages/SumitEvent/ManageEvent.jsx';
 
 
 
@@ -48,6 +49,7 @@ function App() {
             <Routes>
                 {/* USERSIDE */}
                 <Route path="/" element={<Home />} />
+                <Route path="/manage-event/:eventId" element={<EditEvent />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/events" element={<Event />} />
                 <Route path="/create-events" element={<YourEvents />} />

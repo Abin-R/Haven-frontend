@@ -1,14 +1,12 @@
-import NavbarAdmin from "../../components/Navbar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { IoCalendarOutline } from "react-icons/io5";
-// import axios from "axios";
-import { parseISO, format } from "date-fns";
 import axiosInstance from "../../Store/Axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import NavbarAdmin from "../../components/Navbar";
+import { parseISO } from "date-fns";
 
-function YourEvents() {
+function EditEvent() {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -21,7 +19,35 @@ function YourEvents() {
     ticket_count: null,
   });
 
+  const { eventId } = useParams();
   const history = useNavigate();
+
+  useEffect(() => {
+    // Fetch event data when the component mounts
+    fetchEventData(eventId);
+  }, [eventId]);
+
+  const fetchEventData = async (eventId) => {
+    try {
+      const response = await axiosInstance.get(`https://haven.abinr.xyz/event/events/${eventId}`);
+      const eventData = response.data; // Adjust based on your API response structure
+
+      // Set form data with fetched event data
+      setFormData({
+        title: eventData.title,
+        description: eventData.description,
+        // start_date: new Date(eventData.start_date),
+        // end_date: new Date(eventData.end_date),
+        cost: eventData.cost,
+        location: eventData.location,
+        category: eventData.category,
+        image: null, // You might want to handle image editing separately
+        ticket_count: eventData.ticket_count,
+      });
+    } catch (error) {
+      console.error("Error fetching event data:", error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
@@ -33,11 +59,7 @@ function YourEvents() {
   };
 
   const handleDateChange = (date, field) => {
-    // Parse the date string using parseISO
-    const parsedDate = typeof date === "string" ? parseISO(date) : date;
-
-    // Update the field name to 'start_date'
-    const formattedDate = format(parsedDate, "yyyy-MM-dd");
+    const formattedDate = date.toISOString(); // Format date as needed
     setFormData((prevData) => ({
       ...prevData,
       [field]: formattedDate,
@@ -61,19 +83,15 @@ function YourEvents() {
       }
 
       const accessToken = localStorage.getItem("access_token");
-      console.log("----", accessToken);
 
-      // Check if 'organizer' is present in formData
-
-      console.log(formDataToSend);
-      await axiosInstance.post(
-        "https://haven.abinr.xyz/event/create-event/",
+      // Edit existing event
+      await axiosInstance.put(
+        `https://haven.abinr.xyz/event/edit-event/${eventId}/`,
         formDataToSend,
         {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${accessToken}`,
-            // Add any other headers as needed
           },
         }
       );
@@ -100,15 +118,12 @@ function YourEvents() {
 
   return (
     <div>
-      <NavbarAdmin />
+        <NavbarAdmin/>
       <div className="mt-36 flex justify-center font-bold text-4xl">
-        Create Venue Event
+        Edit Event
       </div>
-      <div
-        className="w-full mt-20  md:max-w-full mx-auto"
-        style={{ width: "900px" }}
-      >
-        <div className="py-8  border border-gray-300 sm:rounded-md">
+      <div className="w-full mt-20 md:max-w-full mx-auto" style={{ width: "900px" }}>
+        <div className="py-8 border border-gray-300 sm:rounded-md">
           <form
             method="POST"
             encType="multipart/form-data"
@@ -121,17 +136,17 @@ function YourEvents() {
                 name="title"
                 type="text"
                 className="
-            block
-            w-full
-            mt-1
-            border-gray-300
-            rounded-md
-            shadow-sm
-            focus:border-indigo-300
-            focus:ring
-            focus:ring-indigo-200
-            focus:ring-opacity-50
-          "
+                  block
+                  w-full
+                  mt-1
+                  border-gray-300
+                  rounded-md
+                  shadow-sm
+                  focus:border-indigo-300
+                  focus:ring
+                  focus:ring-indigo-200
+                  focus:ring-opacity-50
+                "
                 placeholder="Joe Bloggs"
                 value={formData.title}
                 onChange={handleChange}
@@ -142,17 +157,17 @@ function YourEvents() {
               <textarea
                 name="description"
                 className="
-            block
-            w-full
-            mt-2
-            border-gray-800
-            rounded-md
-            shadow-sm
-            focus:border-indigo-300
-            focus:ring
-            focus:ring-indigo-200
-            focus:ring-opacity-50
-          "
+                  block
+                  w-full
+                  mt-2
+                  border-gray-800
+                  rounded-md
+                  shadow-sm
+                  focus:border-indigo-300
+                  focus:ring
+                  focus:ring-indigo-200
+                  focus:ring-opacity-50
+                "
                 rows="4"
                 placeholder="Please add as much details as possible."
                 value={formData.description}
@@ -270,33 +285,31 @@ function YourEvents() {
                 name="ticket_count"
                 type="number"
                 className="
-      block
-      w-full
-      mt-1
-      border-gray-300
-      rounded-md
-      shadow-sm
-      focus:border-indigo-300
-      focus:ring
-      focus:ring-indigo-200
-      focus:ring-opacity-50
-    "
+                  block
+                  w-full
+                  mt-1
+                  border-gray-300
+                  rounded-md
+                  shadow-sm
+                  focus:border-indigo-300
+                  focus:ring
+                  focus:ring-indigo-200
+                  focus:ring-opacity-50
+                "
                 placeholder="Enter the ticket count"
                 value={formData.ticket_count}
                 onChange={handleChange}
               />
             </label>
-
             <label className="block mb-6">
               <span className="text-gray-700 font-bold py-2">Image</span>
               <input
-                name="image" // Make sure this matches the expected key on the server
+                name="image"
                 type="file"
                 className="py-2 block w-full mt-1 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 onChange={handleImageChange}
               />
             </label>
-
             <div className="mb-6">
               <button
                 type="submit"
@@ -305,7 +318,6 @@ function YourEvents() {
                 Submit
               </button>
             </div>
-            <div></div>
           </form>
         </div>
       </div>
@@ -313,4 +325,4 @@ function YourEvents() {
   );
 }
 
-export default YourEvents;
+export default EditEvent;

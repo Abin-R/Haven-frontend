@@ -55,7 +55,7 @@ function PostDetail() {
       <div className="flex items-center justify-center xl:mt-24 mt-20 rounded-sm ">
         <img
           className="xl:rounded-3xl sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-2xl shadow-lg xl:max-w-screen-xl"
-          src={`http://127.0.0.1:8000${post.image}`}
+          src={`https://haven.abinr.xyz${post.image}`}
           alt="Post Image"
           style={{ width: "700px" }}
         />

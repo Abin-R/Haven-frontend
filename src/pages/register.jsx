@@ -135,15 +135,15 @@ function Register() {
                   </button>
                 </div>
               </form>
-              <div className="my-3 px-4 border-b text-center">
+              {/* <div className="my-3 px-4 border-b text-center">
                 <div className="leading-none px-4 inline-block text-sm text-stone-300 tracking-wide font-medium bg-white transform translate-y-1/2">
                   Or sign up with Google
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="flex justify-center mt-6  ">
-            <button className="w-64 h-14    max-w-xs font-bold shadow-sm rounded-lg  bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
+            {/* <button className="w-64 h-14    max-w-xs font-bold shadow-sm rounded-lg  bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"> */}
               {/* <svg className="w-4" viewBox="0 0 533.5 544.3">
                   <path
                     d="M533.5 278.4c0-18.5-1.5-37.1-4.7-55.3H272.1v104.8h147c-6.1 33.8-25.7 63.7-54.4 82.7v68h87.7c51.5-47.4 81.1-117.4 81.1-200.2z"
@@ -163,7 +163,7 @@ function Register() {
                   />
                 </svg> */}
            
-            <GoogleOAuthProvider className="bg-red" clientId="591332327561-qqkbkghu0ddnmngvju4e1s9jgfi4rj44.apps.googleusercontent.com">
+            {/* <GoogleOAuthProvider className="bg-red" clientId="591332327561-qqkbkghu0ddnmngvju4e1s9jgfi4rj44.apps.googleusercontent.com">
               <div >
 
               <GoogleLogin containerProps={{
@@ -226,8 +226,8 @@ function Register() {
                 }}
               />
               </div>
-            </GoogleOAuthProvider>
-          </button>
+            </GoogleOAuthProvider> */}
+          {/* </button> */}
         </div>
           <div className="mt-5 text-sm font-display font-semibold text-gray-700 text-center">
             Already have an account!{" "}

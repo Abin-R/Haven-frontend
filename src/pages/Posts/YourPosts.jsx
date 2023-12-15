@@ -1,9 +1,11 @@
 import NavbarAdmin from "../../components/Navbar";
 import { useState, useEffect } from "react";
 import axiosInstance from "../../Store/Axios";
+import DotLoader from "react-spinners/ClipLoader";
 
 function YourPosts() {
   const [userEvents, setUserEvents] = useState([]);
+  let [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserEvents = async () => {
@@ -29,6 +31,9 @@ function YourPosts() {
 
   return (
     <div>
+      {userEvents[0] ? (
+        <>
+        
       <NavbarAdmin />
       <div className=" mt-28  flex justify-center  font-bold text-2xl">Your Posts </div>
       <div className="container max-w-5xl m-auto flex flex-wrap">
@@ -50,6 +55,46 @@ function YourPosts() {
           </div>
         ))}
       </div>
+        </>
+      ):(
+        <>
+          <NavbarAdmin />
+          
+
+          <div className="flex mt-44  flex-col h-screen">
+            <div className="mb-0">
+              {/* Add an attractive illustration or image */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "30vh",
+                }}
+              >
+                <DotLoader
+                  color={"black"}
+                  loading={loading}
+                  // cssOverride={override}
+                  size={70}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+              </div>
+            </div>
+            <div className="text-center">
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                Oops! No items found.
+              </h2>
+              <p className="text-gray-500">
+                It seems there are no items available at the moment.
+              </p>
+              {/* You can add additional content or links here */}
+            </div>
+          </div>
+        </>
+
+      )}
     </div>
   );
 }
