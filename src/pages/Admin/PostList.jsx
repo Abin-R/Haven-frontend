@@ -9,7 +9,7 @@ function PostList() {
     const fetchPosts = async () => {
       try {
         const response = await axiosInstance.get(
-          "http://127.0.0.1:8000/admins/post-list/"
+          "https://haven.abinr.xyz/admins/post-list/"
         );
         console.log(response.data);
         setPosts(response.data);
