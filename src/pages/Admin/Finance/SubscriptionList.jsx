@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import Finance from "../Finance";
 import axios from "axios";
-import React from 'react';
-
+import React from "react";
 
 function SubscriptionList() {
   // State to store subscription data
@@ -18,9 +17,8 @@ function SubscriptionList() {
         );
         const data = response.data;
         console.log("API Response:", data);
-        console.log("subscribed_users",data.subscribed_users) // Add this line
+        console.log("subscribed_users", data.subscribed_users); // Add this line
         setSubscriptions(data);
-        
       } catch (error) {
         console.error("Error fetching subscription data:", error);
       }
@@ -132,12 +130,12 @@ function SubscriptionList() {
                 >
                   Renewed Date
                 </td>
-                <td
+                {/* <td
                   width=""
                   className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-6"
                 >
                   End Date
-                </td>
+                </td> */}
 
                 <td className="whitespace-normal py-2 text-sm font-medium text-gray-500 sm:px-6">
                   Name
@@ -153,9 +151,9 @@ function SubscriptionList() {
                 <td className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-6">
                   Status
                 </td>
-                <td className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-6">
+                {/* <td className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-6">
                   Renew
-                </td>
+                </td> */}
               </tr>
             </thead>
 
@@ -197,7 +195,7 @@ function SubscriptionList() {
                   </td>
 
                   <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
-                    ${subscription.subscribed_users.id}
+                    ${subscription.amount}
                   </td>
 
                   <td className="whitespace-no-wrap py-4 px-6 text-right text-sm text-gray-600 lg:text-left">
@@ -206,38 +204,37 @@ function SubscriptionList() {
 
                   <td className="whitespace-no-wrap py-4 px-6 text-right text-sm text-gray-600 lg:text-left">
                     {isSubscriptionExpired(subscription.timestamps) ? (
+                         <div className="text-white bg-green-500 mx-2 flex justify-center font-medium rounded-xl text-xs whitespace-nowrap px-3 py-1 me-4 mb-2">
+                         paid
+                       </div>
+                    ) : (
                       <button
                         onClick={() => handleRenew(subscription.id)}
                         className="text-white bg-red-500 mx-2 font-medium rounded-xl text-xs whitespace-nowrap px-3 py-1 me-4 mb-2"
                       >
                         Not paid
                       </button>
-                    ) : (
-                      <div className="text-white bg-green-500 mx-2 flex justify-center font-medium rounded-xl text-xs whitespace-nowrap px-3 py-1 me-4 mb-2">
-                        paid
-                      </div>
+                   
                     )}
                   </td>
                   <td className="whitespace-no-wrap py-4 px-6 text-right text-sm text-gray-600 lg:text-left">
-  {subscription.subscribed_users.map(user => (
-    <React.Fragment key={user.id}>
-      {user.is_reneue ? (
-        <div className="text-1xl font-bold mx-4">hii</div>
-      ) : isSubscriptionExpired(subscription.timestamps) ? (
-        <button
-          onClick={() => handleRenew(subscription.id)}
-          className="text-white bg-blue-700 mx-2 font-medium rounded-lg text-sm px-5 py-2 me-4 mb-2"
-        >
-          Renew
-        </button>
-      ) : (
-        <div className="text-1xl font-bold">Renewed</div>
-      )}
-    </React.Fragment>
-  ))}
-</td>
-
-
+                    {subscription.subscribed_users.map((user) => (
+                      <React.Fragment key={user.id}>
+                        {user.is_reneue ? (
+                          <div className="text-1xl font-bold mx-4">hii</div>
+                        ) : isSubscriptionExpired(subscription.timestamps) ? (
+                          <button
+                            onClick={() => handleRenew(subscription.id)}
+                            className="text-white bg-blue-700 mx-2 font-medium rounded-lg text-sm px-5 py-2 me-4 mb-2"
+                          >
+                            Renew
+                          </button>
+                        ) : (
+                          <div className="text-1xl font-bold">Renewed</div>
+                        )}
+                      </React.Fragment>
+                    ))}
+                  </td>
                 </tr>
               ))}
             </tbody>
