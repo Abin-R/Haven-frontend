@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 // import { useSelector } from 'react-redux';
 
 const images = [
-  'https://arenagroup.com/wp-content/uploads/2019/04/shutterstock_550489705_1600x500_acf_cropped.jpg',
+  'https://res.cloudinary.com/jerrick/image/upload/c_scale,f_jpg,q_auto/cwbsbvmttfwfwuq8zfzi.jpg',
   'https://res.cloudinary.com/jerrick/image/upload/c_scale,f_jpg,q_auto/cwbsbvmttfwfwuq8zfzi.jpg',
   'https://bandzoogle.com/files/4739/bzblog-17-ways-to-get-more-music-fans-main.jpg',
   // Add other image URLs for the carousel
