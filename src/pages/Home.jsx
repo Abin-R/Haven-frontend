@@ -3,6 +3,7 @@ import ImageCarousel from "../components/Homeimagecarousel";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import { useState, useEffect } from "react";
 import Footer from "../components/Footer";
+import { Link } from "react-router-dom";
 
 function Home() {
   const [loading, setLoading] = useState(false);
@@ -87,9 +88,9 @@ function Home() {
                     alt="image"
                     className="h-full w-full object-cover"
                   />
-                  <button className="absolute top-60 left-24 bg-red-600 hover:bg-red-800   opacity-80 text-white font-bold py-3 px-10 rounded-3xl">
+                  <Link to="/posts" className="absolute top-60 left-24 bg-red-600 hover:bg-red-800   opacity-80 text-white font-bold py-3 px-10 rounded-3xl">
                     Explore More
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -105,9 +106,9 @@ function Home() {
                     alt="image"
                     className="h-full w-full object-cover"
                   />
-                    <button className="absolute top-60 left-24 bg-red-600 hover:bg-red-800 opacity-80  text-white font-bold py-3 px-10 rounded-3xl">
+                    <Link to="/events" className="absolute top-60 left-24 bg-red-600 hover:bg-red-800 opacity-80  text-white font-bold py-3 px-10 rounded-3xl">
                     Explore More
-                  </button>
+                  </Link>
                 </div>
                 <div className="p-6">
                   <h6 className="mb-4 block font-sans text-base font-semibold uppercase leading-relaxed tracking-normal text-pink-500 antialiased">
