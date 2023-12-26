@@ -24,7 +24,7 @@ const ChatComponent = () => {
     } catch (error) {
       // console.error("Error fetching user data:", error);
     }
-  }, [currentTime]);
+  }, []);
 
   useEffect(() => {
     fetchUsers();
@@ -64,7 +64,7 @@ const ChatComponent = () => {
     setIsSending(false);
     setCurrentTime((prevValue) => !prevValue);
     setForceUpdateKey((prevKey) => prevKey + 1);
-  }, [username, message, socket, setCurrentTime, setMessage, setIsSending, setForceUpdateKey]);
+  }, []);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -99,7 +99,7 @@ const ChatComponent = () => {
     socket.onerror = (error) => {
       // console.error("WebSocket error:", error);
     };
-  }, [forceUpdateKey, currentTime, messages ]);
+  }, []);
  // Empty dependency array means this effect runs once when the component mounts
   
 
