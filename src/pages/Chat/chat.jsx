@@ -97,7 +97,7 @@ const ChatComponent = () => {
     };
 
     socket.onerror = (error) => {
-      // console.error("WebSocket error:", error);
+      console.error("WebSocket error:", error);
     };
   }, []);
  // Empty dependency array means this effect runs once when the component mounts
