@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect ,useCallback} from "react";
 import { useSelector } from "react-redux";
 import NavbarAdmin from "../../components/Navbar";
 import axios from "axios";
@@ -9,22 +9,26 @@ const ChatComponent = () => {
   const { username, image } = useSelector((state) => state.user);
   const socket = new WebSocket('wss://haven.abinr.xyz/ws/chat/general/');
   const [users, setUsers] = useState([]);
+  const [currentTime , setCurrentTime] = useState(false)
+  const [isSending, setIsSending] = useState(false); 
+  const [forceUpdateKey, setForceUpdateKey] = useState(0);
+
+  const fetchUsers = useCallback(async () => {
+    try {
+      const response = await axios.get("https://haven.abinr.xyz/admins/users/");
+      if (response.status === 200) {
+        setUsers(response.data.userlist);
+        setCurrentTime((prevValue) => !prevValue);
+        // console.log(response.data.userlist);
+      }
+    } catch (error) {
+      // console.error("Error fetching user data:", error);
+    }
+  }, [currentTime]);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get("https://haven.abinr.xyz/admins/users/");
-        if (response.status === 200) {
-          setUsers(response.data.userlist);
-          console.log(response.data.userlist);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
     fetchUsers();
-  }, []);
+  }, [fetchUsers]);
 
   const getRandomColor = (name) => {
     const colors = ["#85bdde", "#53e3d4", "#a09480", "#198ba3", "#82a8cd"];
@@ -34,11 +38,11 @@ const ChatComponent = () => {
     return colors[index];
   };
 
-  const sendMessage = async () => {
+  const sendMessage = useCallback(async () => {
     const user = username;
+    setIsSending(true);
 
     try {
-      // Make a POST request to save the message in the backend
       const response = await fetch("https://haven.abinr.xyz/chat/save-message/", {
         method: "POST",
         headers: {
@@ -46,64 +50,57 @@ const ChatComponent = () => {
         },
         body: JSON.stringify({ user, message }),
       });
+      setCurrentTime((prevValue) => !prevValue);
 
       if (!response.ok) {
         console.error("Failed to save message in the backend");
       }
     } catch (error) {
-      console.error("Error while saving message:", error);
+      // console.error("Error while saving message:", error);
     }
 
-    // Send the message to the WebSocket
     socket.send(JSON.stringify({ message, user }));
-    setMessage(""); // Clear the input field after sending the message
-  };
+    setMessage("");
+    setIsSending(false);
+    setCurrentTime((prevValue) => !prevValue);
+    setForceUpdateKey((prevKey) => prevKey + 1);
+  }, [username, message, socket, setCurrentTime, setMessage, setIsSending, setForceUpdateKey]);
 
   useEffect(() => {
-    // Fetch chat messages from the backend when the component mounts
     const fetchMessages = async () => {
       try {
         const response = await fetch("https://haven.abinr.xyz/chat/get-messages/");
         if (response.ok) {
           const data = await response.json();
           setMessages(data);
+          setCurrentTime((prevValue) => !prevValue);
         } else {
-          console.error("Failed to fetch messages from the backend");
+          // console.error("Failed to fetch messages from the backend");
         }
       } catch (error) {
-        console.error("Error while fetching messages:", error);
+        // console.error("Error while fetching messages:", error);
       }
     };
-  
+
     fetchMessages();
-  
-    // WebSocket connection
+
     const socket = new WebSocket('wss://haven.abinr.xyz/ws/chat/general/');
-  socket.onopen = () => {
-    console.log("WebSocket connected");
-  };
+    socket.onopen = () => {
+      // console.log("WebSocket connected");
+    };
 
-  socket.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-    console.log(data)
-    setMessages((prevMessages) => [...prevMessages, data]);
-  };
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      console.log(data);
+      setMessages((prevMessages) => [...prevMessages, data]);
+      setCurrentTime((prevValue) => !prevValue);
+    };
 
-  // socket.onclose = () => {
-  //   console.log("WebSocket closed");
-  // };
-
-  // Error handling
-  socket.onerror = (error) => {
-    console.error("WebSocket error:", error);
-  };
-
-  // // Cleanup function
-  // return () => {
-  //   console.log("Cleaning up WebSocket connection");
-  //   socket.close();
-  // };
-  }, []); // Empty dependency array means this effect runs once when the component mounts
+    socket.onerror = (error) => {
+      // console.error("WebSocket error:", error);
+    };
+  }, [forceUpdateKey, currentTime, messages ]);
+ // Empty dependency array means this effect runs once when the component mounts
   
 
   
@@ -124,12 +121,12 @@ const ChatComponent = () => {
               </div>
               <div className="text-sm font-semibold mt-2">{username}</div>
               <div className="text-xs text-gray-500">Lead UI/UX Deddsigner</div>
-              <div className="flex flex-row items-center mt-3">
+              {/* <div className="flex flex-row items-center mt-3">
                 <div className="flex flex-col justify-center h-4 w-8 bg-indigo-500 rounded-full">
                   <div className="h-3 w-3 bg-white rounded-full self-end mr-1"></div>
                 </div>
                 <div className="leading-none ml-1 text-xs">Active</div>
-              </div>
+              </div> */}
             </div>
             <div className="flex flex-col mt-8">
               <div className="flex flex-row items-center justify-between text-xs">
