@@ -1,5 +1,5 @@
 import { useState, useEffect ,useCallback} from "react";
-import { useState, useEffect ,useCallback} from "react";
+
 import { useSelector } from "react-redux";
 import NavbarAdmin from "../../components/Navbar";
 import axios from "axios";
@@ -9,14 +9,12 @@ const ChatComponent = () => {
   const [message, setMessage] = useState("");
   const { username, image } = useSelector((state) => state.user);
   const socket = new WebSocket('wss://haven.abinr.xyz/ws/chat/general/');
-  const socket = new WebSocket('wss://haven.abinr.xyz/ws/chat/general/');
+ 
   const [users, setUsers] = useState([]);
   const [currentTime , setCurrentTime] = useState(false)
   const [isSending, setIsSending] = useState(false); 
   const [forceUpdateKey, setForceUpdateKey] = useState(0);
-  const [currentTime , setCurrentTime] = useState(false)
-  const [isSending, setIsSending] = useState(false); 
-  const [forceUpdateKey, setForceUpdateKey] = useState(0);
+  
 
   const fetchUsers = useCallback(async () => {
     try {
@@ -43,7 +41,7 @@ const ChatComponent = () => {
     return colors[index];
   };
 
-  const sendMessage = useCallback(async () => {
+
   const sendMessage = useCallback(async () => {
     const user = username;
     setIsSending(true);
@@ -58,7 +56,7 @@ const ChatComponent = () => {
         body: JSON.stringify({ user, message }),
       });
       setCurrentTime((prevValue) => !prevValue);
-      setCurrentTime((prevValue) => !prevValue);
+      
 
       if (!response.ok) {
         console.error("Failed to save message in the backend");
@@ -102,17 +100,9 @@ const ChatComponent = () => {
       // console.log("WebSocket connected");
     };
 
-    const socket = new WebSocket('wss://haven.abinr.xyz/ws/chat/general/');
-    socket.onopen = () => {
-      // console.log("WebSocket connected");
-    };
+   
 
-    socket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      console.log(data);
-      setMessages((prevMessages) => [...prevMessages, data]);
-      setCurrentTime((prevValue) => !prevValue);
-    };
+   
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
       console.log(data);
@@ -152,7 +142,7 @@ const ChatComponent = () => {
                 </div>
                 <div className="leading-none ml-1 text-xs">Active</div>
               </div> */}
-              </div> */}
+             
             </div>
             <div className="flex flex-col mt-8">
               <div className="flex flex-row items-center justify-between text-xs">
