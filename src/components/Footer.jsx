@@ -1,7 +1,7 @@
 function Footer() {
   return (
     <div>
-      <footer className="bg-white dark:bg-gray-950">
+      <footer className="bg-gray-950">
         <div className="container p-6 mx-auto">
           <div className="lg:flex">
             <div className="w-full -mx-6 lg:w-2/5">
@@ -9,7 +9,7 @@ function Footer() {
                 <a href="#">
                   <img
                     className="w-auto h-7"
-                    src="https://merakiui.com/images/full-logo.svg"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Haven_Holiday_Wordmark.svg/1280px-Haven_Holiday_Wordmark.svg.png"
                     alt=""
                   ></img>
                 </a>

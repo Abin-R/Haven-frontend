@@ -69,7 +69,7 @@ export default function NavbarAdmin() {
   return (
     <Disclosure
       as="nav"
-      className="bg-gray-50  fixed top-0  w-full z-50 backdrop-filter backdrop-blur-lg"
+      className="bg-gray-50 rounded-3xl rounded-t-none rounded-br-none fixed top-0  w-full z-50 backdrop-filter backdrop-blur-lg"
       style={{
         boxShadow:
           "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",

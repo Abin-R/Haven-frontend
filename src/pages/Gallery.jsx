@@ -22,32 +22,37 @@ function Gallery() {
     fetchImages();
   }, []);
 
-  const getImageStyles = (index) => {
-    // You can implement logic here to determine different styles based on the index or other criteria
-    // Example: alternate between different background colors
-    const backgroundColors = ["bg-blue-300", "bg-green-300", "bg-yellow-300", "bg-pink-300"];
-    const randomColor = backgroundColors[index % backgroundColors.length];
-    return `object-cover w-full h-48 ${randomColor}`;
-  };
+  const length = Math.ceil(imageUrls.length / 4)
 
   return (
+    imageUrls ?(
+
     <div>
-      <NavbarAdmin />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-28">
-        {imageUrls.map((imageUrl, index) => (
-          <div key={index} className="overflow-hidden rounded-lg shadow-md">
-            <img
-              className={getImageStyles(index)}
-              src={`https://haven.abinr.xyz${imageUrl}`}
-              alt={`Image ${index}`}
-            />
-            <div className="p-4">
-              <p className="text-gray-800 font-semibold">Image {index + 1}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+     <NavbarAdmin  />
+
+      
+      <div className="grid pt-24  grid-cols-2 md:grid-cols-4 gap-4 bg-black " >
+      {[...Array(length)].map((_, colIndex) => (
+        <div key={colIndex} className="grid gap-4">
+          {[...Array(length-1)].map((_, rowIndex) => {
+            const index = colIndex * 3 + rowIndex;
+            return (
+              <div key={index}>
+                <img
+                  className="h-auto max-w-full rounded-lg"
+                  src={`https://haven.abinr.xyz${imageUrls[index]}`}
+                  alt={`Image ${index + 1}`}
+                />
+              </div>
+            );
+          })}
+        </div>
+      ))}
     </div>
+    </div>
+    ):(
+      "HIII"
+    )
   );
 }
 

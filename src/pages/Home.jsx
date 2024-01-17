@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import Navbar from "../components/Navbar";
 import ImageCarousel from "../components/Homeimagecarousel";
 import ScaleLoader from "react-spinners/ScaleLoader";
@@ -7,12 +8,12 @@ import Footer from "../components/Footer";
 function Home() {
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 100);
-  }, []);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 100);
+  // }, []);
 
   return (
     <div>
@@ -39,112 +40,72 @@ function Home() {
           <Navbar />
           <ImageCarousel />
           <div>
-            <div className="text-3xl font-extrabold mt-10 flex justify-center">
+            <div className="sm:text-3xl text-xl font-extrabold mt-8 flex justify-center">
               OUR EVENTS
             </div>
-            <div className="flex justify-start py-12">
-              <div className="relative flex w-full max-w-[58rem] flex-row rounded-3xl rounded-s-none bg-white bg-clip-border text-gray-700 shadow-md">
+            <div className="flex justify-start py-8 flex-col sm:px-0 pr-3  sm:flex-row sm:justify-start">
+              <div className="relative flex w-full max-w-[58rem] flex-col  sm:flex-row rounded-3xl rounded-s-none bg-white bg-clip-border text-gray-700 shadow-md">
                 <div className="p-6">
                   <h6 className="mb-4 block font-sans text-base font-semibold uppercase leading-relaxed tracking-normal text-pink-500 antialiased">
-                    startups
+                    Exciting Events
                   </h6>
-                  <h4 className="mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-                    Lyft launching cross-platform service this week
+                  <h4 className="mb-4 block font-sans text-xl font-semibold leading-tight text-blue-gray-900">
+                    Join the Buzz: Lyft Launches Innovative Cross-Platform
+                    Service This Week!
                   </h4>
-                  <p className="mb-8 block font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
-                    Like so many organizations these days, Autodesk is a company
-                    in transition. It was until recently a traditional boxed
-                    software company selling licenses. Yet its own business
-                    model disruption is only part of the story
+                  <p className="mb-2 block font-sans text-sm font-normal leading-relaxed text-gray-700">
+                    Get ready for a groundbreaking event! Lyft is set to launch
+                    a cross-platform service this week, revolutionizing the way
+                    we experience transportation. Don't miss out on being part
+                    of this momentous occasion that promises to redefine the
+                    future of travel.
                   </p>
-                  <a className="inline-block" href="#">
-                    <button
-                      className="flex select-none items-center gap-2 rounded-lg py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-pink-500 transition-all hover:bg-pink-500/10 active:bg-pink-500/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                      type="button"
-                    >
-                      Learn More
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="2"
-                        stroke="currentColor"
-                        aria-hidden="true"
-                        className="h-4 w-4"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                        ></path>
-                      </svg>
-                    </button>
-                  </a>
                 </div>
-                <div className="relative m-0 w-2/5 shrink-0 overflow-hidden rounded-3xl rounded-l-none bg-white bg-clip-border text-gray-700">
+                <div className="relative m-0 sm:h-full h-40 sm:w-2/5 shrink-0 overflow-hidden rounded-3xl sm:rounded-tr-3xl rounded-tr-none rounded-l-none  bg-white bg-clip-border text-gray-700">
                   <img
                     src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1471&amp;q=80"
                     alt="image"
-                    className="h-full w-full object-cover"
+                    className="h-full w-full sm:object-cover  object-cover"
                   />
-                  <button className="absolute top-60 left-24 bg-red-600 hover:bg-red-800   opacity-80 text-white font-bold py-3 px-10 rounded-3xl">
+                  <button className="absolute sm:top-44  top-20 left-24 bg-red-600 hover:bg-red-800   opacity-80 text-white font-bold py-3 px-10 rounded-3xl">
                     Explore More
                   </button>
                 </div>
               </div>
             </div>
-            <div className="text-3xl font-extrabold mt-3 flex justify-center">
+
+            <div className="sm:text-3xl text-xl font-extrabold mt-2 flex justify-center">
               UPCOMING EVENTS
             </div>
 
-            <div className="flex justify-end py-12">
-              <div className="relative flex w-full max-w-[58rem] flex-row rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-                <div className="relative m-0 w-2/5 shrink-0 overflow-hidden rounded-xl rounded-r-none bg-white bg-clip-border text-gray-700">
+            <div className="flex justify-end py-12 flex-col sm:px-0 pl-3  sm:flex-row">
+              <div className="relative flex w-full max-w-[58rem] flex-col sm:flex-row rounded-3xl sm:rounded-br-none sm:rounded-tr-none rounded-br-none bg-white bg-clip-border text-gray-700 shadow-md">
+                <div className="relative m-0 sm:h-full h-40 sm:w-2/5 shrink-0 overflow-hidden rounded-3xl rounded-bl-none sm:rounded-bl-3xl rounded-r-none bg-white bg-clip-border text-gray-700">
                   <img
-                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1471&amp;q=80"
+                    src="https://cdn.create.vista.com/api/media/small/123737502/stock-photo-people-makes-photo-with-his-smartphone-on-concerts"
                     alt="image"
-                    className="h-full w-full object-cover"
+                    className="sm:h-full sm:w-full sm:object-cover"
                   />
-                    <button className="absolute top-60 left-24 bg-red-600 hover:bg-red-800 opacity-80  text-white font-bold py-3 px-10 rounded-3xl">
+                  <button className="absolute sm:top-44 top-20 left-24 bg-red-600 hover:bg-red-800 opacity-80  text-white font-bold py-3 px-10 rounded-3xl">
                     Explore More
                   </button>
                 </div>
                 <div className="p-6">
-                  <h6 className="mb-4 block font-sans text-base font-semibold uppercase leading-relaxed tracking-normal text-pink-500 antialiased">
-                    startups
+                  <h6 className="mb-3 block font-sans text-base font-semibold uppercase leading-relaxed tracking-normal text-pink-500 antialiased">
+                    Upcoming Events
                   </h6>
-                  <h4 className="mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-                    Lyft launching cross-platform service this week
+                  <h4 className="mb-3 block font-sans text-xl font-semibold leading-tight text-blue-gray-900">
+                    Don't Miss Out! Lyft's Unveiling the Future with a
+                    Cross-Platform Service
                   </h4>
-                  <p className="mb-8 block font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
-                    Like so many organizations these days, Autodesk is a company
-                    in transition. It was until recently a traditional boxed
-                    software company selling licenses. Yet its own business
-                    model disruption is only part of the story
+                  <p className="mb-2 block font-sans text-sm font-normal leading-relaxed text-gray-700">
+                    Brace yourself for an extraordinary event! Lyft is gearing
+                    up to launch an innovative cross-platform service this week.
+                    Join us as we unveil a new era in transportation that goes
+                    beyond the ordinary. Experience the future firsthand and be
+                    part of the journey!
                   </p>
-                  <a className="inline-block" href="#">
-                    <button
-                      className="flex select-none items-center gap-2 rounded-lg py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-pink-500 transition-all hover:bg-pink-500/10 active:bg-pink-500/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                      type="button"
-                    >
-                      Learn More
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="2"
-                        stroke="currentColor"
-                        aria-hidden="true"
-                        className="h-4 w-4"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                        ></path>
-                      </svg>
-                    </button>
-                  </a>
+                  
                 </div>
               </div>
             </div>
