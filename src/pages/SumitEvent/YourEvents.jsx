@@ -181,7 +181,8 @@ function YourEvent() {
                 <div className="order-first ml-auto h-48 w-full bg-gray-700 sm:order-none sm:h-auto sm:w-1/2 lg:w-2/5">
                   <img
                     className="h-full w-full object-cover"
-                    src={`https://haven.abinr.xyz${event.image}`}
+                    // src={`https://haven.abinr.xyz${event.image}`}
+                    src={`${event.image.replace('http://0.0.0.0:9090', 'https://haven.abinr.xyz')}`}
                     // src={event.image}
                     alt={event.title}
                     loading="lazy"

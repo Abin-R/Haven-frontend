@@ -7,7 +7,6 @@ import Paginator from "../../components/Pagination/Paginator";
 import Lottie from "lottie-react";
 import groovyWalkAnimation from "../../assets/groovyWalk.json";
 
-
 function Posts() {
   const [posts, setPosts] = useState([]);
 
@@ -27,7 +26,7 @@ function Posts() {
 
   return (
     <div className="bg-gray-100">
-      <NavbarAdmin bgColor="bg-white"/>
+      <NavbarAdmin bgColor="bg-white" />
       <div className="">
         <div className="sm:mt-24 mt-20 md:mt-16 lg:mt-18 xl:mt-20 flex justify-center text-2xl font-extrabold">
           <span className="mt-5">Posts</span>
@@ -42,11 +41,11 @@ function Posts() {
                 {/* Your existing post content */}
                 <div className="relative h-56 overflow-hidden text-white shadow-lg rounded-t-xl bg-blue-gray-500 bg-clip-border shadow-blue-gray-500/40">
                 <img
-  src={`${post.image}`}
+  src={`${post.image.replace('http://0.0.0.0:9090', 'https://haven.abinr.xyz')}`}
   alt="img-blur-shadow" 
   className="h-full w-full object-cover rounded-lg"
 />
-
+                  
                 </div>
                 <div className="p-4 md:p-6">
                   <h5 className="block mb-2 font-sans text-lg md:text-xl lg:text-2xl xl:text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
@@ -69,30 +68,38 @@ function Posts() {
                 </div>
               </div>
             ))}
-          <Paginator />
+            <Paginator />
           </div>
         ) : (
           <>
-          <div style={{ textAlign: 'center' }}>
-            <Lottie animationData={groovyWalkAnimation} style={{ height: '400px' }} />
-            <h2 className="text-lg sm:text-xl"
-            style={{ color: '#555', marginTop: '10px' }}>
-              Oops! Looks like there are no posts available.
-            </h2>
-            <p className="text-xs px-2 sm:text-xl"
-            style={{  color: '#888', paddingBottom: '70px', marginTop: '10px' }}>
-              Don't worry, our team is working hard to bring you exciting content soon.
-              Stay tuned!
-            </p>
-          </div>
-        </>
-        
+            <div style={{ textAlign: "center" }}>
+              <Lottie
+                animationData={groovyWalkAnimation}
+                style={{ height: "400px" }}
+              />
+              <h2
+                className="text-lg sm:text-xl"
+                style={{ color: "#555", marginTop: "10px" }}
+              >
+                Oops! Looks like there are no posts available.
+              </h2>
+              <p
+                className="text-xs px-2 sm:text-xl"
+                style={{
+                  color: "#888",
+                  paddingBottom: "70px",
+                  marginTop: "10px",
+                }}
+              >
+                Don't worry, our team is working hard to bring you exciting
+                content soon. Stay tuned!
+              </p>
+            </div>
+          </>
         )}
-        
       </div>
     </div>
   );
-  
 }
 
 export default Posts;

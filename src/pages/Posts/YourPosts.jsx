@@ -5,7 +5,7 @@ import DotLoader from "react-spinners/ClipLoader";
 
 function YourPosts() {
   const [userEvents, setUserEvents] = useState([]);
-  let [loading, setLoading] = useState(true);
+  let [loading, ] = useState(true);
 
   useEffect(() => {
     const fetchUserEvents = async () => {
@@ -42,7 +42,8 @@ function YourPosts() {
             <div className="flex flex-col lg:flex-row rounded overflow-hidden h-auto lg:h-32 border shadow shadow-lg">
               <img
                 className="block h-auto w-full lg:w-48 flex-none bg-cover h-24"
-                src={event.image}
+             
+                src={`${event.image.replace('http://0.0.0.0:9090', 'https://haven.abinr.xyz')}`}
                 alt="Event"
               />
               <div className="bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
