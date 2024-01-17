@@ -222,7 +222,7 @@ function PostDetail() {
                               {review.images.map((image, imageIndex) => (
                                 <div key={imageIndex}>
                                   <img
-                                    src={`http://127.0.0.1:8000${image.image}`}
+                                    src={`https://haven.abinr.xyz${image.image}`}
                                     alt={`review-image-${image.id}`}
                                     style={{ width: "140px", height: "130px" }} // Adjust the width and height as needed
                                   />

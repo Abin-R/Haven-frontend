@@ -1,4 +1,5 @@
 import { useState, useEffect ,useCallback} from "react";
+import { useState, useEffect ,useCallback} from "react";
 import { useSelector } from "react-redux";
 import NavbarAdmin from "../../components/Navbar";
 import axios from "axios";
@@ -8,7 +9,11 @@ const ChatComponent = () => {
   const [message, setMessage] = useState("");
   const { username, image } = useSelector((state) => state.user);
   const socket = new WebSocket('wss://haven.abinr.xyz/ws/chat/general/');
+  const socket = new WebSocket('wss://haven.abinr.xyz/ws/chat/general/');
   const [users, setUsers] = useState([]);
+  const [currentTime , setCurrentTime] = useState(false)
+  const [isSending, setIsSending] = useState(false); 
+  const [forceUpdateKey, setForceUpdateKey] = useState(0);
   const [currentTime , setCurrentTime] = useState(false)
   const [isSending, setIsSending] = useState(false); 
   const [forceUpdateKey, setForceUpdateKey] = useState(0);
@@ -39,7 +44,9 @@ const ChatComponent = () => {
   };
 
   const sendMessage = useCallback(async () => {
+  const sendMessage = useCallback(async () => {
     const user = username;
+    setIsSending(true);
     setIsSending(true);
 
     try {
@@ -51,11 +58,13 @@ const ChatComponent = () => {
         body: JSON.stringify({ user, message }),
       });
       setCurrentTime((prevValue) => !prevValue);
+      setCurrentTime((prevValue) => !prevValue);
 
       if (!response.ok) {
         console.error("Failed to save message in the backend");
       }
     } catch (error) {
+      // console.error("Error while saving message:", error);
       // console.error("Error while saving message:", error);
     }
 
@@ -74,13 +83,17 @@ const ChatComponent = () => {
           const data = await response.json();
           setMessages(data);
           setCurrentTime((prevValue) => !prevValue);
+          setCurrentTime((prevValue) => !prevValue);
         } else {
+          // console.error("Failed to fetch messages from the backend");
           // console.error("Failed to fetch messages from the backend");
         }
       } catch (error) {
         // console.error("Error while fetching messages:", error);
+        // console.error("Error while fetching messages:", error);
       }
     };
+
 
     fetchMessages();
 
@@ -89,6 +102,17 @@ const ChatComponent = () => {
       // console.log("WebSocket connected");
     };
 
+    const socket = new WebSocket('wss://haven.abinr.xyz/ws/chat/general/');
+    socket.onopen = () => {
+      // console.log("WebSocket connected");
+    };
+
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      console.log(data);
+      setMessages((prevMessages) => [...prevMessages, data]);
+      setCurrentTime((prevValue) => !prevValue);
+    };
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
       console.log(data);
@@ -122,10 +146,12 @@ const ChatComponent = () => {
               <div className="text-sm font-semibold mt-2">{username}</div>
               <div className="text-xs text-gray-500">Lead UI/UX Deddsigner</div>
               {/* <div className="flex flex-row items-center mt-3">
+              {/* <div className="flex flex-row items-center mt-3">
                 <div className="flex flex-col justify-center h-4 w-8 bg-indigo-500 rounded-full">
                   <div className="h-3 w-3 bg-white rounded-full self-end mr-1"></div>
                 </div>
                 <div className="leading-none ml-1 text-xs">Active</div>
+              </div> */}
               </div> */}
             </div>
             <div className="flex flex-col mt-8">

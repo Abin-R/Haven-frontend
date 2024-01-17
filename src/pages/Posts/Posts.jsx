@@ -1,8 +1,12 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useState, useEffect } from "react";
 import axios from "axios";
 import NavbarAdmin from "../../components/Navbar";
 import { Link } from "react-router-dom";
 import Paginator from "../../components/Pagination/Paginator";
+import Lottie from "lottie-react";
+import groovyWalkAnimation from "../../assets/groovyWalk.json";
+
 
 function Posts() {
   const [posts, setPosts] = useState([]);
@@ -22,27 +26,27 @@ function Posts() {
   }, []); // The empty dependency array ensures that this effect runs once, similar to componentDidMount
 
   return (
-    <div>
-      <NavbarAdmin />
-      {posts[0] ? (
-        <>
-          <div className="mt-24  md:mt-16 lg:mt-18 xl:mt-24 flex justify-center text-2xl font-bold">
-            Posts
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-8 lg:px-10 px-7 mt-5 md:mt-8 lg:mt-6 xl:mt-7">
+    <div className="bg-gray-100">
+      <NavbarAdmin bgColor="bg-white"/>
+      <div className="">
+        <div className="sm:mt-24 mt-20 md:mt-16 lg:mt-18 xl:mt-20 flex justify-center text-2xl font-extrabold">
+          <span className="mt-5">Posts</span>
+        </div>
+        {posts[0] ? (
+          <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-8 lg:px-10 px-7 mt-5 md:mt-8 lg:mt-6 xl:mt-7">
             {posts.map((post) => (
               <div
                 key={post.id}
-                className="relative flex flex-col text-gray-700 shadow-md rounded-xl bg-clip-border"
+                className="relative flex flex-col bg-white text-gray-700 shadow-md rounded-xl bg-clip-border"
               >
                 {/* Your existing post content */}
                 <div className="relative h-56 overflow-hidden text-white shadow-lg rounded-t-xl bg-blue-gray-500 bg-clip-border shadow-blue-gray-500/40">
-                  <img
-                    src={post.image}
+                <img
+  src={`${post.image}`}
+  alt="img-blur-shadow" 
+  className="h-full w-full object-cover rounded-lg"
+/>
 
-                    alt="img-blur-shadow"
-                    className="h-full w-full object-cover rounded-lg"
-                  ></img>
                 </div>
                 <div className="p-4 md:p-6">
                   <h5 className="block mb-2 font-sans text-lg md:text-xl lg:text-2xl xl:text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
@@ -65,14 +69,30 @@ function Posts() {
                 </div>
               </div>
             ))}
+          <Paginator />
+          </div>
+        ) : (
+          <>
+          <div style={{ textAlign: 'center' }}>
+            <Lottie animationData={groovyWalkAnimation} style={{ height: '400px' }} />
+            <h2 className="text-lg sm:text-xl"
+            style={{ color: '#555', marginTop: '10px' }}>
+              Oops! Looks like there are no posts available.
+            </h2>
+            <p className="text-xs px-2 sm:text-xl"
+            style={{  color: '#888', paddingBottom: '70px', marginTop: '10px' }}>
+              Don't worry, our team is working hard to bring you exciting content soon.
+              Stay tuned!
+            </p>
           </div>
         </>
-      ) : (
-        <div className="mt-52">NLL</div>
-      )}
-      <Paginator />
+        
+        )}
+        
+      </div>
     </div>
   );
+  
 }
 
 export default Posts;

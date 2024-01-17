@@ -1,14 +1,15 @@
+/* eslint-disable react/no-unescaped-entities */
 import NavbarAdmin from "../../components/Navbar";
 import Banner from "../../components/SubmitEvents/banner";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import DotLoader from "react-spinners/ClipLoader";
+import Lottie from "lottie-react";
+import groovyWalkAnimation from "../../assets/groovyWalk.json";
 
 function Event() {
   const [events, setEvents] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
-  let [loading] = useState(true);
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
@@ -34,16 +35,15 @@ function Event() {
 
   return (
     <div>
-      {events  ? (
+      <NavbarAdmin />
+      {events[0] ? (
         <>
-          <NavbarAdmin />
-          <Banner />
-
+        <Banner />
           <div className="flex items-center py-5">
             <span className="lg:font-extrabold text-2xl mb-2 mt-5 px-9 font-bold">
               Upcoming Events
             </span>
-            <div className="relative ml-auto mt-1 px-9">
+            <div className="relative ml-auto mt-4 px-9">
               <input
                 type="checkbox"
                 id="sortbox"
@@ -104,7 +104,7 @@ function Event() {
             </div>
           </div>
 
-          <div className="px-1 lg:px-10 py-6 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-1">
+          <div className="px-1 lg:px-10 py-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-1">
             {events.map((event, index) => (
               <div
                 key={event.id}
@@ -163,42 +163,21 @@ function Event() {
           </div>
         </>
       ) : (
-        <>
-          <NavbarAdmin />
-          <Banner />
-
-          <div className="flex mt-20  flex-col h-screen">
-            <div className="mb-0">
-              {/* Add an attractive illustration or image */}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "30vh",
-                }}
-              >
-                <DotLoader
-                  color={"black"}
-                  loading={loading}
-                  // cssOverride={override}
-                  size={70}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-              </div>
-            </div>
-            <div className="text-center">
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                Oops! No items found.
-              </h2>
-              <p className="text-gray-500">
-                It seems there are no items available at the moment.
-              </p>
-              {/* You can add additional content or links here */}
-            </div>
+        <div style={{ textAlign: 'center' ,marginTop:'100px'}}>
+        <span className="lg:font-extrabold text-2xl mb-2 mt-20 px-9 font-bold">
+              Upcoming Events
+            </span>
+            <Lottie animationData={groovyWalkAnimation} style={{ height: '400px' }} />
+            <h2 className="text-lg sm:text-xl"
+            style={{ color: '#555', marginTop: '10px' }}>
+              Oops! Looks like there are no posts available.
+            </h2>
+            <p className="text-xs px-2 sm:text-xl"
+            style={{  color: '#888', paddingBottom: '70px', marginTop: '10px' }}>
+              Don't worry, our team is working hard to bring you exciting content soon.
+              Stay tuned!
+            </p>
           </div>
-        </>
       )}
     </div>
   );
