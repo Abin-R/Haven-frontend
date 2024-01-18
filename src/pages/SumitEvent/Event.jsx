@@ -170,7 +170,7 @@ function Event() {
             <Lottie animationData={groovyWalkAnimation} style={{ height: '400px' }} />
             <h2 className="text-lg sm:text-xl"
             style={{ color: '#555', marginTop: '10px' }}>
-              Oops! Looks like there are no posts available.
+              Oops! Looks like there are no Events available.
             </h2>
             <p className="text-xs px-2 sm:text-xl"
             style={{  color: '#888', paddingBottom: '70px', marginTop: '10px' }}>

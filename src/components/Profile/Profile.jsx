@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Link } from "react-router-dom";
-import html2pdf from 'html2pdf.js';
+import html2pdf from "html2pdf.js";
 
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -11,27 +11,25 @@ import Ticket from "../Ticket/Ticket";
 
 function Profiles() {
   const downloadAsPDF = () => {
-    const content = document.getElementById('modalContent'); // Specify the ID of your modal content
+    const content = document.getElementById("modalContent"); // Specify the ID of your modal content
 
     const pdfOptions = {
       margin: 10,
-      filename: 'ticket.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
+      filename: "ticket.pdf",
+      image: { type: "jpeg", quality: 0.98 },
       html2canvas: { scale: 2 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
     };
 
     html2pdf().from(content).set(pdfOptions).save();
   };
-  
+
   const [profileData, setProfileData] = useState(null);
   const [booking, setBooking] = useState(null);
   const { username } = useSelector((state) => state.user);
   const [activeTab, setActiveTab] = useState("home");
   const [isModalOpen, setModalOpen] = useState(false);
   const [isModalOpens, setIsModalOpens] = useState(false);
-
-  
 
   const openModal = () => {
     setIsModalOpens(true);
@@ -116,7 +114,7 @@ function Profiles() {
             ></img>
           </div>
 
-          <div className="flex flex-row">
+          <div className="flex sm:flex-row flex-col">
             <div className="absolute top-48 mx-24 ml-8 w-72 bg-white dark:bg-white rounded-lg overflow-hidden shadow-lg">
               <div className="border-b px-4 pb-6">
                 <div className="text-center my-4 relative">
@@ -176,9 +174,9 @@ function Profiles() {
                 <div className="flex"></div>
               </div>
             </div>
-            <div className="flex align-middle justify-end px-11 ml-80">
+            <div className="flex py-96 sm:py-1 sm:flex-col flex-col  align-middle justify-center items-center sm:justify-end px-11 ml-80">
               <div>
-                <div className="grid grid-cols-3 gap-5">
+                <div className="grid  grid-cols-3 gap-5">
                   <button
                     className={` p-4 rounded shadow-md flex items-center justify-center ${
                       activeTab === "home"
@@ -262,90 +260,103 @@ function Profiles() {
                       <h3 className="text-lg font-extrabold text-black">
                         Attending Events
                       </h3>
-                      <div>
-                        {booking.map(
-                          (booking) =>
-                            booking.booking_status === "CONFIRMED" && (
-                              <div
-                                key={booking.id}
-                                className="flex flex-col mt-5"
-                              >
+                      {booking[0] ? (
+                        <div>
+                          {booking.map(
+                            (booking) =>
+                              booking.booking_status === "CONFIRMED" && (
                                 <div
-                                  className="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-2xl md:max-w-6xl mx-auto border border-white bg-gray-100"
-                                  style={{ width: "800px" }}
+                                  key={booking.id}
+                                  className="flex flex-col mt-5"
                                 >
-                                  <div className="w-full md:w-44 bg-gray-10 grid place-items-center">
-                                    <img
-                                      src={`https://haven.abinr.xyz${booking.event.image}`}
-                                      alt="event image"
-                                      className="rounded-xl"
-                                    />
-                                  </div>
-                                  <div className="w-full md:w-2/3 bg-gray-10 flex flex-col space-y-2 p-3">
-                                    <h3 className="font-black text-gray-700 md:text-2xl text-xl">
-                                      {booking.event.title}
-                                    </h3>
-                                    <p className="md:text-lg text-gray-500 text-base">
-                                      {new Date(
-                                        booking.event.start_date
-                                      ).toLocaleDateString("en-US", {
-                                        day: "numeric",
-                                        month: "long",
-                                        year: "numeric",
-                                      })}
-                                    </p>
-                                    <div className="flex ">
-                                      {/* Use a template literal to include the booking ID in the URL */}
-                                      <button
-                                        onClick={openModal}
-                                        className="py-2  flex flex-row px-6 mb-2 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 dark:text-gray-400 dark:border-gray-600 dark:hover:text-black dark:hover:bg-gray-200"
-                                      >
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          fill="none"
-                                          viewBox="0 0 24 24"
-                                          strokeWidth={2}
-                                          stroke="black"
-                                          className="w-5 h-6 mr-2"
-                                        >
-                                          <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z"
-                                          />
-                                        </svg>
-
-                                        <span>View Tickets</span>
-                                      </button>
-
-                                      <Link to={`/invoice/${booking.id}`}>
+                                  <div
+                                    className="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-2xl md:max-w-6xl mx-auto border border-white bg-gray-100"
+                                    style={{ width: "800px" }}
+                                  >
+                                    <div className="w-full md:w-44 bg-gray-10 grid place-items-center">
+                                      <img
+                                        src={`https://haven.abinr.xyz${booking.event.image}`}
+                                        alt="event image"
+                                        className="rounded-xl"
+                                      />
+                                    </div>
+                                    <div className="w-full md:w-2/3 bg-gray-10 flex flex-col space-y-2 p-3">
+                                      <h3 className="font-black text-gray-700 md:text-2xl text-xl">
+                                        {booking.event.title}
+                                      </h3>
+                                      <p className="md:text-lg text-gray-500 text-base">
+                                        {new Date(
+                                          booking.event.start_date
+                                        ).toLocaleDateString("en-US", {
+                                          day: "numeric",
+                                          month: "long",
+                                          year: "numeric",
+                                        })}
+                                      </p>
+                                      <div className="flex ">
                                         {/* Use a template literal to include the booking ID in the URL */}
-                                        <button className="py-2 mx-4 flex flex-row px-6 mb-2 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 dark:text-gray-400 dark:border-gray-600 dark:hover:text-black dark:hover:bg-gray-200">
+                                        <button
+                                          onClick={openModal}
+                                          className="py-2  flex flex-row px-6 mb-2 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 dark:text-gray-400 dark:border-gray-600 dark:hover:text-black dark:hover:bg-gray-200"
+                                        >
                                           <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"
                                             viewBox="0 0 24 24"
                                             strokeWidth={2}
                                             stroke="black"
-                                            className="w-5 h-5 mr-2"
+                                            className="w-5 h-6 mr-2"
                                           >
                                             <path
                                               strokeLinecap="round"
                                               strokeLinejoin="round"
-                                              d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
+                                              d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z"
                                             />
                                           </svg>
 
-                                          <span>View Invoice</span>
+                                          <span>View Tickets</span>
                                         </button>
-                                      </Link>
+
+                                        <Link to={`/invoice/${booking.id}`}>
+                                          {/* Use a template literal to include the booking ID in the URL */}
+                                          <button className="py-2 mx-4 flex flex-row px-6 mb-2 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 dark:text-gray-400 dark:border-gray-600 dark:hover:text-black dark:hover:bg-gray-200">
+                                            <svg
+                                              xmlns="http://www.w3.org/2000/svg"
+                                              fill="none"
+                                              viewBox="0 0 24 24"
+                                              strokeWidth={2}
+                                              stroke="black"
+                                              className="w-5 h-5 mr-2"
+                                            >
+                                              <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
+                                              />
+                                            </svg>
+
+                                            <span>View Invoice</span>
+                                          </button>
+                                        </Link>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                            )
-                        )}
-                      </div>
+                              )
+                          )}
+                        </div>
+                      ) : (
+                        <div className="flex flex-col items-center mt-5">
+                          <p className="text-gray-500 text-lg mb-2">
+                            No attending events at the moment.
+                          </p>
+                          <img
+                            src="data:image/jpeg;base64,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"
+                            alt="No Events Illustration"
+                            className="w-32 h-32 rounded-2xl"
+                          />
+                        </div>
+                      )}
                     </div>
                   )}
                   {activeTab === "profile" && (
@@ -475,7 +486,6 @@ function Profiles() {
                 onClick={closeModal}
                 className="flex justify-end items-end right-1 "
               >
-                
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -491,16 +501,17 @@ function Profiles() {
                   />
                 </svg>
               </button>
-
             </div>
-            
-            <button onClick={downloadAsPDF} className="bg-blue-500 text-white py-2 px-4 rounded">
-            Download as PDF
-          </button>
-          <div id="modalContent">
 
-            <Ticket />
-          </div>
+            <button
+              onClick={downloadAsPDF}
+              className="bg-blue-500 text-white py-2 px-4 rounded"
+            >
+              Download as PDF
+            </button>
+            <div id="modalContent">
+              <Ticket />
+            </div>
 
             {/* Close button */}
           </div>

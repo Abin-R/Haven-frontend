@@ -1,14 +1,13 @@
-
-
 /* eslint-disable react/no-unescaped-entities */
 import Navbar from "../components/Navbar";
 import ImageCarousel from "../components/Homeimagecarousel";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import { useState } from "react";
 import Footer from "../components/Footer";
+import { Link } from "react-router-dom";
 
 function Home() {
-  const [loading, ] = useState(false);
+  const [loading] = useState(false);
 
   // useEffect(() => {
   //   setLoading(true);
@@ -69,9 +68,11 @@ function Home() {
                     alt="image"
                     className="h-full w-full sm:object-cover  object-cover"
                   />
-                  <button className="absolute sm:top-44  top-20 left-24 bg-red-600 hover:bg-red-800   opacity-80 text-white font-bold py-3 px-10 rounded-3xl">
-                    Explore More
-                  </button>
+                  <Link to="/posts">
+                    <button className="absolute sm:top-44 top-20 left-24 bg-red-600 hover:bg-red-800 opacity-80 text-white font-bold py-3 px-10 rounded-3xl">
+                      Explore More
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -88,9 +89,12 @@ function Home() {
                     alt="image"
                     className="sm:h-full sm:w-full sm:object-cover"
                   />
+                  <Link to="/events">
+
                   <button className="absolute sm:top-44 top-20 left-24 bg-red-600 hover:bg-red-800 opacity-80  text-white font-bold py-3 px-10 rounded-3xl">
                     Explore More
                   </button>
+                  </Link>
                 </div>
                 <div className="p-6">
                   <h6 className="mb-3 block font-sans text-base font-semibold uppercase leading-relaxed tracking-normal text-pink-500 antialiased">
@@ -107,7 +111,6 @@ function Home() {
                     beyond the ordinary. Experience the future firsthand and be
                     part of the journey!
                   </p>
-                  
                 </div>
               </div>
             </div>

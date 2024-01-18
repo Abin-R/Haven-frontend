@@ -31,7 +31,7 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/admins/sales-data"
+          "https://haven.abinr.xyz/admins/sales-data"
         );
         setSalesData(response.data.salesData); // Assuming your API returns an object with a property 'salesData'
       } catch (error) {

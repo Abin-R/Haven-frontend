@@ -194,8 +194,7 @@ function PostDetail() {
                             {/* User Info */}
                             <div className="flex flex-col justify-start items-start space-y-2">
                               <p className="text-base font-bold leading-none text-gray-800 ">
-                                {review.user_username
-}
+                                {review.user_username}
                               </p>
                               <p className="text-sm leading-none text-gray-600 ">
                                 {new Date(
@@ -218,7 +217,7 @@ function PostDetail() {
                           </p>
                           {/* Images */}
                           {review.images && review.images.length > 0 && (
-                            <div className="hidden md:flex mt-6 flex-row justify-start items-start space-x-4">
+                            <div className=" md:flex mt-6 flex-row justify-start items-start space-x-4">
                               {review.images.map((image, imageIndex) => (
                                 <div key={imageIndex}>
                                   <img
